@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Photo, Comment
-from .forms import PhotoForm, CommentForm
-from users.models import Profile 
+from .forms import PhotoForm, CommentForm, LensForm
+from users.models import Profile
 import random
 
 
@@ -52,7 +52,7 @@ def photo(request, photo_id):
     """Show the details of a specific photo"""
     current_user = request.user
     photo = Photo.objects.get(id=photo_id)
-    comments = photo.comment_set.order_by("-date_added") 
+    comments = photo.comment_set.order_by("-date_added")
     context = {"photo": photo, "current_user": current_user, "comments": comments}
     return render(request, "photo_site/photo.html", context)
 
@@ -110,3 +110,17 @@ def comment(request, photo_id):
             return redirect("photo_site:photo", photo_id=photo_id)
     context = {"photo": photo, "form": form}
     return render(request, "photo_site/comment.html", context)
+
+
+@login_required
+def add_lens(request):
+    """Users can add new lens info to populate list"""
+    if request.method != "POST":
+        form = LensForm()
+    else:
+        form = LensForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("photo_site:add_photo")
+    context = {"form": form}
+    return render(request, "photo_site/add_lens.html", context)

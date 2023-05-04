@@ -21,4 +21,6 @@ urlpatterns = [
     path("about/", views.about, name="about"), 
     # create a new comment on a photograph 
     path("comment/<int:photo_id>/", views.comment, name="comment"), 
+    # Add new lens info to lens list 
+    path("add_lens/", views.add_lens, name="add_lens"), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
