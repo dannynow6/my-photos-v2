@@ -1,0 +1,20 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %}
+{% block title %}Photo Site Login{% endblock title %}
+{% block content %} 
+<div class="container w-75">
+  <h2 class="text-center display-4 pb-3" id="log-in">Sign In</h2>
+  <br />
+  {% if form.errors %}
+  <p class="m-4">Your username and password didn't match. Please try again.</p>
+  {% endif %}
+  <div class="m-4">
+    <form method="post" action="{% url 'users:login' %}">
+      {% csrf_token %} {{ form.as_p }}
+
+      <span class="d-flex justify-content-center"><button class="btn btn-outline-success" name="submit">Sign in</button>
+      <input type="hidden" name="next" value="{% url 'photo_site:index' %}" /></span>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

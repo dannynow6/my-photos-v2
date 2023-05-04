@@ -1,0 +1,50 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+
+{% block title %}About Photo Site{% endblock title %}
+
+{% block content %}
+<div class="container w-75">
+    <h4 class="display-4 text-center my-2" id="about-title">About</h4>
+    
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">About</li>
+        </ol>
+    </nav>
+    <br />
+    <div class="container text-center text-secondary">
+        <p>
+            Create an account, store photos, and more...
+        </p>
+    </div>
+    <br />
+    <div class="container">
+        <h5 class="text-secondary text-center">Featured Photo</h5>
+        <br />
+        <span class="d-flex justify-content-center">
+            <div class="card bg-white text-white mt-2 border-0" >
+                <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:400px;height:400px;border-radius:20%;" />
+                <div class="card-img-overlay">
+                    <h5 class="photo-title"><a class="photo-title" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
+                </div>
+            </div>
+        </span>
+    </div>
+    <br />
+    <div class="container d-flex justify-content-around">
+        <a href="{% url 'photo_site:index' %}" alt="home"><img class="about-logo" src="{% static 'img/logo.png' %}" alt="photo-site logo" style="max-height:40px;max-width=40px" /></a>
+        <article class="text-center text-secondary">
+            <p>
+                <a class="about-link" href="mailto:photo_site@example.com">{% bs_icon 'envelope-at' size="1.5rem" %}</a>
+            </p>
+        </article>
+        <article class="text-secondary text-center">
+            <span class="mr-3"><a class="about-link" href="https://instagram.com/photo-site" target="_blank" rel="noopener noreferrer">{% bs_icon 'instagram' size="1.5rem" %}</a></span>
+            <span class="mr-3"><a class="about-link" href="https://twitter.com/photo-site" target="_blank" rel="noopener noreferrer">{% bs_icon 'twitter' size="1.5rem" %}</a></span>
+            <a class="about-link" href="https://youtube.com" target="_blank" rel="noopener noreferrer">{% bs_icon 'youtube' size="1.5rem" %}</a>
+        </article>
+
+    </div>
+</div>
+{% endblock content %}

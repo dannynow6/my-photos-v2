@@ -1,0 +1,35 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+
+{% block title %}Edit Photo {{ photo.id }}{% endblock title %}
+
+{% block content %}
+<div class="container w-75">
+    <h4 class="display-4 text-secondary text-center my-2">Edit Photo {{ photo.id }}</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit Photo {{ photo.id }}</li>
+        </ol>
+    </nav>
+    <div class="container w-75 p-4 my-4 border">
+        <h3 class="text-secondary p-4 border-bottom" style="background-color: #f2fbff;">Edit Photo {{ photo.id }}</h3>
+        <div class="container p-4 my-2">
+          <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:edit_photo' photo.id %}">
+          {% csrf_token %} 
+          <p>
+            {{ form.as_p }}
+          </p>
+            <button
+              type="submit"
+              class="btn btn-lg btn-outline-primary float-right"
+              role="button"
+              alt="submit"
+              value="Save"
+            >
+              {% bs_icon 'image-fill' size="1.1em" %} Save
+            </button>
+          </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

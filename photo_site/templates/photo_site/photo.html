@@ -1,0 +1,73 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+
+{% block title %}Photo {{ photo.id }}: {{ photo.title|title }}{% endblock title %}
+
+{% block content %}
+<div class="container w-75">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'photo_site:photos' %}">Photos</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Photo {{ photo.id }}</li>
+        </ol>
+    </nav>
+    <br />
+    
+    {% if photo.title %}
+    <h4 class="text-secondary text-center mb-3">{{ photo.title|title }}</h4>
+    {% else %}
+    <h4 class="text-secondary text-center mb-3">No title</h4>
+    {% endif %}
+    <div class="container w-75">
+        <span class="d-flex justify-content-center">
+            <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="max-width:600px;max-height:600px;border-radius:15%;" />
+        </span>
+        <br />
+        <div class="d-flex justify-content-center text-center text-secondary">
+            <p>{{ photo.description|capfirst }}</p>
+        </div>
+        <br />
+        <p class="text-center text-secondary">Image by {{ photo.owner|title }}</p>
+
+        <ul class="list-group rounded">
+            {% if photo.type %}
+            <li class="list-group-item">{{ photo.type }}</li>
+            {% endif %}
+            {% if photo.location %}
+            <li class="list-group-item">Location: {{ photo.location|upper }}</li>
+            {% endif %}
+            {% if photo.camera and photo.lens %}
+            <li class="list-group-item">Shot with: {{ photo.camera|title }}, {{ photo.lens }}</li>
+            {% endif %}
+            {% if photo.year_taken %}
+            <li class="list-group-item">Year taken: {{ photo.year_taken }}</li>
+            {% endif %}
+            {% if photo.keywords %}
+            <li class="list-group-item">Keywords: {{ photo.keywords }}</li>
+            {% endif %}
+        </ul>
+        <br />
+        <div class="container d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-info"><a class="text-secondary" href="{% url 'photo_site:comment' photo.id %}"><span class="text-info">{% bs_icon 'chat-square-text' %}</span> Comment</a></button>
+        
+            {% if photo.owner == current_user %}
+            <button type="button" class="btn btn-outline-danger"><a class="text-danger" href="{% url 'photo_site:edit_photo' photo.id %}">{% bs_icon 'pencil' %} Edit</a></button>
+            {% endif %}
+        </div>
+        <br /> 
+        <ul class="list-group rounded">
+            {% for comment in comments %}
+            <li class="list-group-item">
+                <article class="mx-3">
+                    <p class="text-secondary text-left">- {{ comment.comment }}</p>
+                    <p class="text-secondary text-center">{{ comment.owner|title }}</p>
+                </article>
+            </li>
+            {% empty %}
+            <li class="list-group-item">No Comments</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<br /> 
+{% endblock content %}

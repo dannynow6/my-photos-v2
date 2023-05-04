@@ -1,0 +1,35 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+{% block title %}{{ user.username|title }} Profile{% endblock title %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ user.username|title }}'s Profile</li>
+    </ol>
+</nav>
+<div class="container w-75">
+    {% if profile.photo %}
+    <h2 class="text-center display-4 pb-3" id="profile-title"><img src="{{ profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%" /> {{ user.username|title }}'s Profile</h2>
+    {% else %}
+    <h2 class="text-center display-4 pb-3" id="profile-title">{{ user.username|title }}'s Profile</h2>
+    {% endif %}
+    <br />
+    <div class="container p-4 m-2">
+        <article class="text-center text-secondary">
+            <h6>Bio</h6>
+            <p>{{ profile.bio }}</p>
+            <p>{{ user.first_name|title }} {{ user.last_name|title }}</p>
+            <p>Age: {{ profile.age }}</p>
+        </article>
+        <article class="text-center text-secondary">
+            <h6>Location</h6>
+            <p>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</p>
+        </article>
+        <br/>
+        <span class="d-flex justify-content-center">
+            <button type="button" class="btn btn-outline-danger mx-2 mb-2"><a class="text-danger" href="{% url 'users:profile' user.id %}">{% bs_icon 'pencil' size="1.1em" %} Edit</a></button>
+        </span>
+    </div>
+</div>
+
+{% endblock content %}

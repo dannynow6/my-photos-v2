@@ -1,0 +1,32 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %}
+{% block title %}{{ user.username|title }} Profile{% endblock title %}
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb bg-white">
+        <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ user.username|title }}'s Profile</li>
+    </ol>
+</nav>
+<div class="container w-75">
+    <h2 class="text-secondary text-center display-4 pb-3 border-muted border-bottom">{{ user.username|title }}'s Profile</h2>
+    <br />
+    <div class="container p-4 m-2">
+        <form enctype="multipart/form-data"  action="{% url 'users:profile' user.id %}" method="POST">
+            {% csrf_token %} 
+            <p>
+                {{ form.as_p }}
+            </p>
+            <button
+                type="submit"
+                class="btn btn-lg btn-outline-primary"
+                role="button"
+                alt="submit"
+                value="Save"
+            >
+                Save Profile
+            </button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

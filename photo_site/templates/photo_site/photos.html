@@ -1,0 +1,32 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+
+{% block title %}Photos{% endblock title %}
+
+{% block content %}
+<div class="container w-75">
+    <h4 class="display-3 text-center my-2" id="photos-title">Gallery</h4>
+    
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-white">
+            <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Photos</li>
+        </ol>
+    </nav>
+    <br />
+    <div class="container d-flex justify-content-between flex-wrap">
+    {% for photo in photos %}
+        <div class="card bg-white text-white mt-2 border-0" >
+            <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:350px;height:250px;border-radius:30%;" />
+            <div class="card-img-overlay">
+                <h5 class="photo-title"><a class="photo-title" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
+            </div>
+        </div>
+        <br />
+    {% empty %}
+    </div>
+        <h6 class="text-secondary text-center">Add a Photo</h6>
+        <br />
+        <a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,3 @@
+add multipart form data to profile form for handling image 
+add handling image in post to profile view for submission of form with data
+then photo will display 

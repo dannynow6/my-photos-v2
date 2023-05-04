@@ -1,0 +1,30 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+
+{% block title %}Photo-Site Home{% endblock title %}
+
+{% block content %}
+<div class="container w-75">
+    <br />
+    <div class="d-flex justify-content-between">
+        <a class="index-nav" href="{% url 'photo_site:photos' %}">Photos</a> 
+        <a class="index-nav" href="{% url 'photo_site:add_photo' %}">Add Photo</a>
+        <a class="index-nav" href="{% url 'photo_site:about' %}">About</a>
+        {% if user.is_authenticated %}
+        <a class="index-nav" href="{% url 'photo_site:my_photos' %}">{{ user.username|title }}'s Photos</a>
+        {% endif %}
+    </div>
+    <br /> 
+    <div class="d-flex justify-content-center">
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="max-height:400px;max-width:400px;border-radius:25%;" />
+    </div>
+    <br />
+    <h5 class="text-center"><a class="photo-index" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
+    <br /> 
+    <div class="d-flex justify-content-center">
+        <img src="{{ photo2.image.url }}" alt="{{ photo2.title }}" style="max-height:400px;max-width:400px;border-radius:25%;" />
+    </div>
+    <br />
+    <h5 class="text-center"><a class="photo-index" href="{% url 'photo_site:photo' photo2.id %}">{{ photo2.title|title }}</a></h5>
+    
+</div>
+{% endblock content %}
