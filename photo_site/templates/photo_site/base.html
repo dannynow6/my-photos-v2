@@ -34,6 +34,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'photo_site:about' %}">About</a>
                     </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:logout' %}">{% bs_icon 'x-circle' %}Log out</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">{% bs_icon 'box-arrow-in-right' %}Log in</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <div class="btn-group">
                             {% if user.is_authenticated %}
