@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Photo, Comment
 from .forms import PhotoForm, CommentForm
@@ -53,7 +54,15 @@ def photo(request, photo_id):
     current_user = request.user
     photo = Photo.objects.get(id=photo_id)
     comments = photo.comment_set.order_by("-date_added")
-    context = {"photo": photo, "current_user": current_user, "comments": comments}
+    paginator = Paginator(comments, 5)  # Show 5 comments per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    context = {
+        "photo": photo,
+        "current_user": current_user,
+        "comments": comments,
+        "page_obj": page_obj,
+    }
     return render(request, "photo_site/photo.html", context)
 
 
