@@ -17,13 +17,50 @@
         <div class="container p-4 my-2">
           <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:add_photo' %}">
           {% csrf_token %} 
-          <p>
-            {{ photo_form.as_p }}
-          </p>
+          
+          <!-- Rendering photo form manually to insert modal -->
+          <div class="form-group">
+            {{ photo_form.image.label_tag }}
+            {{ photo_form.image }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.title.label_tag }}
+            {{ photo_form.title }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.description.label_tag }}
+            {{ photo_form.description }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.type.label_tag }}
+            {{ photo_form.type }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.location.label_tag }}
+            {{ photo_form.location }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.camera.label_tag }}
+            {{ photo_form.camera }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.keywords.label_tag }}
+            {{ photo_form.keywords }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.year_taken.label_tag }}
+            {{ photo_form.year_taken }}
+          </div>
+          <div class="form-group">
+            {{ photo_form.lens_used.label_tag }}
+            {{ photo_form.lens_used }}
+            <button class="btn btn-outline-info float-right" data-toggle="modal" data-target="#lensModal">Add New Lens</button>
+          </div>
+          
             <button
               name="add_photo_submit"
               type="submit"
-              class="btn btn-lg btn-outline-primary float-right"
+              class="btn btn-lg btn-outline-primary"
               role="button"
               alt="submit"
               value="Save"
@@ -31,7 +68,6 @@
               {% bs_icon 'image-fill' size="1.1em" %} Save
             </button>
           </form>
-          <button class="btn btn-outline-info float-left" data-toggle="modal" data-target="#lensModal">Add New Lens</button>
         </div>
     </div>
     <div class="modal fade" id="lensModal" tabindex="-1" role="dialog" aria-labelledby="addLensInfo" aria-hidden="true">
