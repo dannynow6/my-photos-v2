@@ -1,21 +1,21 @@
 {% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
 
-{% block title %}Add Photo{% endblock title %}
+{% block title %}Add Lens{% endblock title %}
 
 {% block content %}
 <div class="container w-75">
-    <h4 class="display-4 text-center my-2" id="add-photo-title">Add a Photo</h4>
+    <h4 class="display-4 text-center text-secondary my-2">Add Lens</h4>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white">
             <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'photo_site:photos' %}">Photos</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Add Photo</li>
+            <li class="breadcrumb-item"><a href="{% url 'photo_site:add_photo' %}">Add Photo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Lens</li>
         </ol>
     </nav>
     <div class="container w-75">
         
         <div class="container p-4 my-2">
-          <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:add_photo' %}">
+          <form method="POST" action="{% url 'photo_site:lens' %}">
           {% csrf_token %} 
           <p>
             {{ form.as_p }}
@@ -30,7 +30,6 @@
               {% bs_icon 'image-fill' size="1.1em" %} Save
             </button>
           </form>
-          <button class="btn btn-outline-info float-left"><a href="{% url 'photo_site:lens' %}">Add Lens</a></button>
         </div>
     </div>
 </div>

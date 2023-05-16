@@ -45,6 +45,9 @@
             {% if photo.keywords %}
             <li class="list-group-item">Keywords: {{ photo.keywords }}</li>
             {% endif %}
+            {% if photo.lens_used %}
+            <li class="list-group-item">Lens: {{ photo.lens_used }}</li>
+            {% endif %}
         </ul>
         <br />
         <div class="container d-flex justify-content-between">

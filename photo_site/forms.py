@@ -1,5 +1,5 @@
 from django import forms
-from .models import Photo, Comment
+from .models import Photo, Comment, Lens
 
 
 class PhotoForm(forms.ModelForm):
@@ -8,26 +8,28 @@ class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = (
+            "image",
             "title",
             "description",
             "type",
-            "image",
             "location",
             "camera",
             "lens",
             "keywords",
             "year_taken",
+            "lens_used",
         )
         labels = {
+            "image": "Image",
             "title": "Title",
             "description": "Description",
             "type": "Type",
-            "image": "Image",
             "location": "Location",
             "camera": "Camera Used",
             "lens": "Lens Used",
             "keywords": "Keywords",
             "year_taken": "Year Taken",
+            "lens_used": "Lens Used",
         }
 
 
@@ -40,4 +42,21 @@ class CommentForm(forms.ModelForm):
 
         labels = {
             "comment": "Comment",
+        }
+
+
+class LensForm(forms.ModelForm):
+    """a form for adding lens info"""
+
+    class Meta:
+        model = Lens
+        fields = (
+            "name",
+            "make",
+            "size",
+        )
+        labels = {
+            "name": "Name",
+            "make": "Make",
+            "size": "Size",
         }

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .models import Photo, Comment
-from .forms import PhotoForm, CommentForm
+from .models import Photo, Comment, Lens
+from .forms import PhotoForm, CommentForm, LensForm
 from users.models import Profile
 import random
 
@@ -119,3 +119,19 @@ def comment(request, photo_id):
             return redirect("photo_site:photo", photo_id=photo_id)
     context = {"photo": photo, "form": form}
     return render(request, "photo_site/comment.html", context)
+
+
+@login_required
+def lens(request):
+    """add a new lens to the list of lenses"""
+    if request.method != "POST":
+        # blank form
+        form = LensForm()
+    else:
+        # POST data submitted and process
+        form = LensForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("photo_site:add_photo")
+    context = {"form": form}
+    return render(request, "photo_site/lens.html", context)

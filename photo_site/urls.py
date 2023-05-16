@@ -17,8 +17,10 @@ urlpatterns = [
     path("my_photos/", views.my_photos, name="my_photos"),
     # page for user to edit their photo
     path("edit_photo/<int:photo_id>/", views.edit_photo, name="edit_photo"),
-    # about page for photo site 
-    path("about/", views.about, name="about"), 
-    # create a new comment on a photograph 
-    path("comment/<int:photo_id>/", views.comment, name="comment"), 
+    # about page for photo site
+    path("about/", views.about, name="about"),
+    # create a new comment on a photograph
+    path("comment/<int:photo_id>/", views.comment, name="comment"),
+    # Add lens info
+    path("lens/", views.lens, name="lens"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
