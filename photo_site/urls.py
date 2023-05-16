@@ -7,7 +7,7 @@ app_name = "photo_site"
 urlpatterns = [
     # Home page
     path("", views.index, name="index"),
-    # Add photo page
+    # Add photo page with add lens modal
     path("add_photo/", views.add_photo, name="add_photo"),
     # View photos uploaded by users
     path("photos/", views.photos, name="photos"),
@@ -22,5 +22,5 @@ urlpatterns = [
     # create a new comment on a photograph
     path("comment/<int:photo_id>/", views.comment, name="comment"),
     # Add lens info
-    path("lens/", views.lens, name="lens"),
+    # path("lens/", views.lens, name="lens"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

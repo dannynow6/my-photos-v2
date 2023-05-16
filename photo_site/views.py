@@ -27,18 +27,26 @@ def index(request):
 # Require users to have an account before uploading a photo
 @login_required
 def add_photo(request):
-    """a page for adding a new photo"""
-    if request.method != "POST":
-        form = PhotoForm()
-    else:
-        form = PhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_photo = form.save(commit=False)
-            new_photo.owner = request.user
-            new_photo.save()
-            return redirect("photo_site:index")
+    """a page for adding a new photo and a modal to add a new lens option"""
+    if request.method == "POST":
+        if "add_photo_submit" in request.POST:
+            photo_form = PhotoForm(request.POST, request.FILES)
+            if photo_form.is_valid():
+                new_photo = photo_form.save(commit=False)
+                new_photo.owner = request.user
+                new_photo.save()
+                return redirect("photo_site:index")
+        elif "add_lens_submit" in request.POST:
+            lens_form = LensForm(request.POST)
+            if lens_form.is_valid():
+                lens_form.save()
+                return redirect("photo_site:add_photo")
 
-    context = {"form": form}
+    else:
+        photo_form = PhotoForm()
+        lens_form = LensForm()
+
+    context = {"photo_form": photo_form, "lens_form": lens_form}
     return render(request, "photo_site/add_photo.html", context)
 
 
@@ -120,18 +128,3 @@ def comment(request, photo_id):
     context = {"photo": photo, "form": form}
     return render(request, "photo_site/comment.html", context)
 
-
-@login_required
-def lens(request):
-    """add a new lens to the list of lenses"""
-    if request.method != "POST":
-        # blank form
-        form = LensForm()
-    else:
-        # POST data submitted and process
-        form = LensForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("photo_site:add_photo")
-    context = {"form": form}
-    return render(request, "photo_site/lens.html", context)
