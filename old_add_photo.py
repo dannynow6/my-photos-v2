@@ -29,3 +29,5 @@ def lens(request):
             return redirect("photo_site:add_photo")
     context = {"form": form}
     return render(request, "photo_site/lens.html", context)
+
+lens = models.CharField(max_length=200, blank=True, null=True)

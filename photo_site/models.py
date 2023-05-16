@@ -26,7 +26,7 @@ class Photo(models.Model):
     image = models.ImageField(upload_to="photos/")
     location = models.CharField(max_length=200, blank=True, null=True)
     camera = models.CharField(max_length=125, blank=True, null=True)
-    lens = models.CharField(max_length=200, blank=True, null=True)
+    # lens = models.CharField(max_length=200, blank=True, null=True)
     keywords = models.CharField(max_length=250, blank=True, null=True)
     date_added = models.DateField(auto_now_add=True)
     year_taken = models.CharField(max_length=10, blank=True, null=True)

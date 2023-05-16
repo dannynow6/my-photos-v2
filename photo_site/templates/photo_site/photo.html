@@ -36,8 +36,8 @@
             {% if photo.location %}
             <li class="list-group-item">Location: {{ photo.location|upper }}</li>
             {% endif %}
-            {% if photo.camera and photo.lens %}
-            <li class="list-group-item">Shot with: {{ photo.camera|title }}, {{ photo.lens }}</li>
+            {% if photo.camera %}
+            <li class="list-group-item">Shot with: {{ photo.camera|title }}</li>
             {% endif %}
             {% if photo.year_taken %}
             <li class="list-group-item">Year taken: {{ photo.year_taken }}</li>
