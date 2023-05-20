@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db import IntegrityError
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Photo, Comment, Lens
@@ -29,18 +30,25 @@ def index(request):
 def add_photo(request):
     """a page for adding a new photo and a modal to add a new lens option"""
     if request.method == "POST":
-        if "add_photo_submit" in request.POST:
-            photo_form = PhotoForm(request.POST, request.FILES)
-            if photo_form.is_valid():
-                new_photo = photo_form.save(commit=False)
-                new_photo.owner = request.user
-                new_photo.save()
-                return redirect("photo_site:index")
-        elif "add_lens_submit" in request.POST:
-            lens_form = LensForm(request.POST)
-            if lens_form.is_valid():
-                lens_form.save()
-                return redirect("photo_site:add_photo")
+        try:
+            if "add_photo_submit" in request.POST:
+                photo_form = PhotoForm(request.POST, request.FILES)
+                if photo_form.is_valid():
+                    new_photo = photo_form.save(commit=False)
+                    new_photo.owner = request.user
+                    new_photo.save()
+                    return redirect("photo_site:index")
+            elif "add_lens_submit" in request.POST:
+                lens_form = LensForm(request.POST)
+                if lens_form.is_valid():
+                    lens_form.save()
+                    return redirect("photo_site:add_photo")
+        except IntegrityError:
+            return render(
+                request,
+                "photo_site/add_photo.html",
+                {"alert_message": "Error. Data already entered."},
+            )
 
     else:
         photo_form = PhotoForm()
@@ -127,4 +135,3 @@ def comment(request, photo_id):
             return redirect("photo_site:photo", photo_id=photo_id)
     context = {"photo": photo, "form": form}
     return render(request, "photo_site/comment.html", context)
-

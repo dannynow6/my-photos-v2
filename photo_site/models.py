@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Lens(models.Model):
     """Lens used to take photo"""
 
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=150, unique=True)
     make = models.CharField(max_length=100, blank=True, null=True)
     size = models.CharField(max_length=50)
 
