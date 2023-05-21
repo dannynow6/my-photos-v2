@@ -29,30 +29,27 @@ def index(request):
 @login_required
 def add_photo(request):
     """a page for adding a new photo and a modal to add a new lens option"""
+    photo_form = PhotoForm()
+    lens_form = LensForm()
+
     if request.method == "POST":
-        try:
-            if "add_photo_submit" in request.POST:
-                photo_form = PhotoForm(request.POST, request.FILES)
-                if photo_form.is_valid():
-                    new_photo = photo_form.save(commit=False)
-                    new_photo.owner = request.user
-                    new_photo.save()
-                    return redirect("photo_site:index")
-            elif "add_lens_submit" in request.POST:
-                lens_form = LensForm(request.POST)
-                if lens_form.is_valid():
+        # Handle the add photo form
+        if "add_photo_submit" in request.POST:
+            photo_form = PhotoForm(request.POST, request.FILES)
+            if photo_form.is_valid():
+                new_photo = photo_form.save(commit=False)
+                new_photo.owner = request.user
+                new_photo.save()
+                return redirect("photo_site:index")
+        # Handle the add lens form
+        elif "add_lens_submit" in request.POST:
+            lens_form = LensForm(request.POST)
+            if lens_form.is_valid():
+                try:
                     lens_form.save()
                     return redirect("photo_site:add_photo")
-        except IntegrityError:
-            return render(
-                request,
-                "photo_site/add_photo.html",
-                {"alert_message": "Error. Data already entered."},
-            )
-
-    else:
-        photo_form = PhotoForm()
-        lens_form = LensForm()
+                except IntegrityError:
+                    lens_form.add_error("name", "This name already exists.")
 
     context = {"photo_form": photo_form, "lens_form": lens_form}
     return render(request, "photo_site/add_photo.html", context)
