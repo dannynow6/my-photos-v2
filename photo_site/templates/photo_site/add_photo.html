@@ -13,7 +13,14 @@
         </ol>
     </nav>
     <div class="container w-75">
-        
+      {% if lens_form.name.errors %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ lens_form.name.errors }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
         <div class="container p-4 my-2">
           <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:add_photo' %}">
           {% csrf_token %} 
@@ -54,7 +61,7 @@
           <div class="form-group">
             {{ photo_form.lens_used.label_tag }}
             {{ photo_form.lens_used }}
-            <button class="btn btn-outline-info float-right" data-toggle="modal" data-target="#lensModal">Add New Lens</button>
+            <button class="btn btn-outline-secondary text-info float-right" data-toggle="modal" data-target="#lensModal">Add New Lens</button>
           </div>
           
             <button
@@ -92,10 +99,5 @@
         </div>
       </div>
     </div>
-    {% if lens_form.name.errors %}
-      <div class="alert alert-danger" role="alert">
-        {{ lens_form.name.errors }}
-      </div>
-    {% endif %}
 </div>
 {% endblock content %}
