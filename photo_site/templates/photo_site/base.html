@@ -28,9 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'photo_site:photos' %}">Photos</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'photo_site:add_photo' %}">Add Photo</a>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'photo_site:about' %}">About</a>
                     </li>

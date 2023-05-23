@@ -51,8 +51,9 @@
         </ul>
         <br />
         <div class="container d-flex justify-content-between">
+            {% if user.is_authenticated %}
             <button type="button" class="btn btn-outline-info"><a class="text-secondary" href="{% url 'photo_site:comment' photo.id %}"><span class="text-info">{% bs_icon 'chat-square-text' %}</span> Comment</a></button>
-        
+            {% endif %}
             {% if photo.owner == current_user %}
             <button type="button" class="btn btn-outline-danger"><a class="text-danger" href="{% url 'photo_site:edit_photo' photo.id %}">{% bs_icon 'pencil' %} Edit</a></button>
             {% endif %}
