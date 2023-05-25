@@ -32,7 +32,7 @@ class Photo(models.Model):
         ("astro", "Astrophotography"),
         ("portrait", "Portrait"),
         ("night", "Night"),
-        ("bw", "Black & White"),
+        ("black and white", "Black & White"),
         ("nature", "Nature"),
         ("animal", "Animal"),
         ("travel", "Travel"),

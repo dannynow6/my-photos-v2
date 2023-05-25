@@ -30,8 +30,8 @@
         <p class="text-center text-secondary">Image by {{ photo.owner|title }}</p>
 
         <ul class="list-group rounded">
-            {% if photo.type %}
-            <li class="list-group-item">{{ photo.type }}</li>
+            {% if photo.photo_type %}
+            <li class="list-group-item">{{ photo.photo_type|title }}</li>
             {% endif %}
             {% if photo.location %}
             <li class="list-group-item">Location: {{ photo.location|upper }}</li>

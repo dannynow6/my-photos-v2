@@ -56,9 +56,20 @@ def add_photo(request):
 
 
 def photos(request):
-    """a page to view photos uploaded by users"""
-    photos = Photo.objects.order_by("-date_added")
-    context = {"photos": photos}
+    """Photos gallery page - allow users to filter results based on photo_type"""
+    # Get the selected photo_type from query parameters
+    selected_type = request.GET.get("photo_type")
+    # Retrieve all photos if no type selected, otherwise filter photos by selected type
+    if selected_type:
+        photos = Photo.objects.filter(photo_type__iexact=selected_type)
+    else:
+        photos = Photo.objects.order_by("-date_added")
+
+    context = {
+        "photos": photos,
+        "selected_type": selected_type,
+        "photo_types": Photo.TYPE_CHOICES,
+    }
     return render(request, "photo_site/photos.html", context)
 
 
