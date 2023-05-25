@@ -93,9 +93,25 @@ def photo(request, photo_id):
 @login_required
 def my_photos(request):
     """display all photos uploaded by user"""
+    # Allow user to filter results by photo_type
+    selected_type = request.GET.get("photo_type")
     current_profile = Profile.objects.get(user=request.user)
-    my_photos = Photo.objects.filter(owner=request.user).order_by("-date_added")
-    context = {"my_photos": my_photos, "current_profile": current_profile}
+    # Retrieve all photos of current user or photos of certain type
+    if selected_type:
+        my_photos = (
+            Photo.objects.filter(photo_type__iexact=selected_type)
+            .filter(owner=request.user)
+            .order_by("-date_added")
+        )
+    else:
+        my_photos = Photo.objects.filter(owner=request.user).order_by("-date_added")
+
+    context = {
+        "my_photos": my_photos,
+        "current_profile": current_profile,
+        "selected_type": selected_type,
+        "photo_types": Photo.TYPE_CHOICES,
+    }
     return render(request, "photo_site/my_photos.html", context)
 
 

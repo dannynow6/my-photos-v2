@@ -7,12 +7,10 @@
     <br />
     <div class="d-flex justify-content-between">
         <a class="index-nav" href="{% url 'photo_site:photos' %}">Photos</a> 
-        {% if user.is_authenticated %}
-        <a class="index-nav" href="{% url 'photo_site:add_photo' %}">Add Photo</a>
-        {% endif %}
         <a class="index-nav" href="{% url 'photo_site:about' %}">About</a>
         {% if user.is_authenticated %}
-        <a class="index-nav" href="{% url 'photo_site:my_photos' %}">{{ user.username|title }}'s Photos</a>
+            <a class="index-nav" href="{% url 'photo_site:add_photo' %}">Add Photo</a>
+            <a class="index-nav" href="{% url 'photo_site:my_photos' %}">{{ user.username|title }}'s Photos</a>
         {% endif %}
     </div>
     <br /> 

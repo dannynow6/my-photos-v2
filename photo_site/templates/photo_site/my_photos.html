@@ -2,9 +2,25 @@
 
 {% block title %}{{ user.username|title }}'s Photos{% endblock title %}
 
-{% block content %}
+{% block content %} 
 <div class="container w-75">
-    <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s Photos</h4>
+    <div class="container mb-5">
+        <div class="dropdown mb-3">
+            <a class="btn btn-outline-secondary btn-lg dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">{% bs_icon 'images' size="1.35rem" %} Filter Photos</a>
+
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="?">All</a>
+                {% for photo_type in photo_types %}
+                    <a class="dropdown-item" href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}>{{ photo_type.1 }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% if selected_type %}
+        <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s {{ selected_type|title }} Photos</h4>
+    {% else %}
+        <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s Photos</h4>
+    {% endif %}
     
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white">
@@ -13,6 +29,7 @@
         </ol>
     </nav>
     <br />
+    
     <div class="container d-flex justify-content-between flex-wrap">
     {% for photo in my_photos %}
         <div class="card bg-white text-white mt-2 border-0" >
@@ -23,8 +40,14 @@
         </div>
         <br />
     {% empty %}
-    </div>
-        <h6 class="text-secondary text-center"><a class="no-photo" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></h6>
+        </div>
+        <div class="container">
+            <h6 class="text-secondary text-center">No Photos</h6>
+            <br />
+            <span class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-primary"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
+            </span>
     {% endfor %}
+        </div>
 </div>
 {% endblock content %}

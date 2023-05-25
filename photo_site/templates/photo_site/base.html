@@ -38,6 +38,9 @@
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'photo_site:my_photos' %}">{{ user.username|title }}'s Photos</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:logout' %}">{% bs_icon 'x-circle' %}Log out</a>
                     </li>
                     {% else %}
