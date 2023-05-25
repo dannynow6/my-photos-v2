@@ -33,6 +33,8 @@ class Photo(models.Model):
         ("portrait", "Portrait"),
         ("night", "Night"),
         ("bw", "Black & White"),
+        ("nature", "Nature"),
+        ("animal", "Animal"),
         ("travel", "Travel"),
         ("abstract", "Abstract"),
         ("experimental", "Experimental"),
@@ -50,7 +52,7 @@ class Photo(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, unique=True)
     description = models.CharField(max_length=300)
-    type = models.CharField(max_length=200, blank=True, null=True)
+    # type = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to="photos/")
     location = models.CharField(max_length=200, blank=True, null=True)
     camera = models.CharField(max_length=125, blank=True, null=True)
@@ -59,6 +61,9 @@ class Photo(models.Model):
     date_added = models.DateField(auto_now_add=True)
     year_taken = models.CharField(max_length=10, blank=True, null=True)
     lens_used = models.ForeignKey(Lens, on_delete=models.CASCADE, blank=True, null=True)
+    photo_type = models.CharField(
+        max_length=75, choices=TYPE_CHOICES, default="landscape"
+    )
 
     def __str__(self):
         return f"{self.owner}, {self.title}"

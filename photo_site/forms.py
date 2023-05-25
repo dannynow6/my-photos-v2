@@ -11,23 +11,23 @@ class PhotoForm(forms.ModelForm):
             "image",
             "title",
             "description",
-            "type",
             "location",
             "camera",
             "keywords",
             "year_taken",
             "lens_used",
+            "photo_type",
         )
         labels = {
             "image": "Image",
             "title": "Title",
             "description": "Description",
-            "type": "Type",
             "location": "Location",
             "camera": "Camera Used",
             "keywords": "Keywords",
             "year_taken": "Year Taken",
             "lens_used": "Lens Used",
+            "photo_type": "Type of Photography",
         }
 
 
