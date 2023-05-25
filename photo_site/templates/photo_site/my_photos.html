@@ -19,7 +19,7 @@
     {% if selected_type %}
         <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s {{ selected_type|title }} Photos</h4>
     {% else %}
-        <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s Photos</h4>
+        <h4 class="display-4 text-center my-2" id="your-photos">{% if current_profile.photo %}<img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" />{% endif %}  {{ user.username|title }}'s Photos</h4>
     {% endif %}
     
     <nav aria-label="breadcrumb">

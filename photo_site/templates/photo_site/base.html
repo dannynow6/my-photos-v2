@@ -23,19 +23,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'photo_site:photos' %}">Photos</a>
+                        <a class="nav-link" href="{% url 'photo_site:photos' %}">{% bs_icon "images" %} Photos</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'photo_site:add_photo' %}">Add Photo</a>
+                        <a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon "plus-circle" %} Add Photo</a>
                     </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'photo_site:about' %}">About</a>
+                        <a class="nav-link" href="{% url 'photo_site:about' %}">{% bs_icon "info-circle" %} About</a>
                     </li>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'photo_site:my_photos' %}">{{ user.username|title }}'s Photos</a>
+                        <a class="nav-link" href="{% url 'photo_site:my_photos' %}">{% bs_icon "images" %} {{ user.username|title }}'s Photos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:logout' %}">{% bs_icon 'x-circle' %}Log out</a>
@@ -53,8 +53,8 @@
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item text-secondary" href="{% url 'users:view_profile' user.id %}">{% bs_icon 'person-badge' %}{{ user.username|title }}'s Profile</a>
-                                <a class="dropdown-item text-secondary" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a>
-                                <a class="dropdown-item text-secondary" href="{% url 'photo_site:my_photos' %}">{% bs_icon 'file-earmark-image' %} {{ user.username|title }}'s Photos</a> 
+                                <a class="dropdown-item text-secondary" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'plus-circle' %} Add Photo</a>
+                                <a class="dropdown-item text-secondary" href="{% url 'photo_site:my_photos' %}">{% bs_icon 'images' %} {{ user.username|title }}'s Photos</a> 
                                 <a class="dropdown-item text-secondary" href="{% url 'users:logout' %}">{% bs_icon 'x-circle' %}Log out</a>
                             </div>
                             {% else %}

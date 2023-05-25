@@ -15,6 +15,7 @@
     <div class="container w-75">
       {% if lens_form.name.errors %}
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">Lens Already Exists</h4>
         {{ lens_form.name.errors }}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -61,7 +62,7 @@
           <div class="form-group">
             {{ photo_form.lens_used.label_tag }}
             {{ photo_form.lens_used }}
-            <button class="btn btn-outline-secondary text-info float-right" data-toggle="modal" data-target="#lensModal">Add New Lens</button>
+            <button class="btn btn-outline-secondary text-info float-right" data-toggle="modal" data-target="#lensModal">{% bs_icon "plus-circle" %} New Lens</button>
           </div>
           
             <button
@@ -72,13 +73,13 @@
               alt="submit"
               value="Save"
             >
-              {% bs_icon 'image-fill' size="1.1em" %} Save
+              {% bs_icon 'save' %} Save
             </button>
           </form>
         </div>
     </div>
     <div class="modal fade" id="lensModal" tabindex="-1" role="dialog" aria-labelledby="addLensInfo" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="lensModalLabel">Add Lens Info</h5>
@@ -93,7 +94,7 @@
               <p>
                 {{ lens_form.as_p }}
               </p>
-              <button type="submit" class="btn btn-primary" name="add_lens_submit">Save</button>
+              <button type="submit" class="btn btn-primary float-right" name="add_lens_submit">{% bs_icon 'save' %} Save</button>
             </form>
           </div>
         </div>
