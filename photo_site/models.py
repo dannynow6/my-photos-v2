@@ -20,9 +20,32 @@ class Lens(models.Model):
 Create a photo type CHOICES field in Photo model. List as choices main types of Photos. Then use these choices as principal filter to allow users to filter photos uploaded to site to view certain types
 """
 
-
+#### Added Type Choices list - need to make a new field for it and migrate database
 class Photo(models.Model):
     """a model representation of a photo"""
+
+    # Choice list for Photo Type
+    TYPE_CHOICES = [
+        ("landscape", "Landscape"),
+        ("street", "Street"),
+        ("macro", "Macro"),
+        ("astro", "Astrophotography"),
+        ("portrait", "Portrait"),
+        ("night", "Night"),
+        ("bw", "Black & White"),
+        ("travel", "Travel"),
+        ("abstract", "Abstract"),
+        ("experimental", "Experimental"),
+        ("fashion", "Fashion"),
+        ("long exposure", "Long Exposure"),
+        ("aerial", "Aerial"),
+        ("product", "Product"),
+        ("advertising", "Advertising"),
+        ("wedding", "Wedding"),
+        ("sports", "Sports"),
+        ("still life", "Still Life"),
+        ("photojournalism", "Photojournalism"),
+    ]
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, unique=True)
