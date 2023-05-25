@@ -15,13 +15,13 @@
     </div>
     <br /> 
     <div class="d-flex justify-content-center">
-        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="max-height:400px;max-width:400px;border-radius:25%;" />
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="max-height:500px;max-width:500px;border-radius:25%;" />
     </div>
     <br />
     <h5 class="text-center"><a class="photo-index" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
     <br /> 
     <div class="d-flex justify-content-center">
-        <img src="{{ photo2.image.url }}" alt="{{ photo2.title }}" style="max-height:400px;max-width:400px;border-radius:25%;" />
+        <img src="{{ photo2.image.url }}" alt="{{ photo2.title }}" style="max-height:500px;max-width:500px;border-radius:25%;" />
     </div>
     <br />
     <h5 class="text-center"><a class="photo-index" href="{% url 'photo_site:photo' photo2.id %}">{{ photo2.title|title }}</a></h5>
