@@ -93,3 +93,28 @@ def comment(request, photo_id):
 <!--changing register user to modal-->
 <a class="nav-link" href="{% url 'users:register' %}">{% bs_icon 'person-add' %} Create Account</a>
 
+<a class="nav-link" href="#registerModal" data-toggle="modal" data-target="#registerModal">{% bs_icon "person-add" %} Create Account</a>
+
+<!--Register New User Modal-->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerUser" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="registerModalLabel">Create Account</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+      <!-- Register User Form embedded in Modal -->
+      <form method="post" action="{% url 'photo_site:index' %}">
+          {% csrf_token %}
+          <p>
+          {{ form.as_p }}
+          </p>
+          <button type="submit" class="btn btn-outline-primary float-right" name="register_user">{% bs_icon 'person-add' %} Save</button>
+      </form>
+      </div>
+  </div>
+  </div>
+</div>
