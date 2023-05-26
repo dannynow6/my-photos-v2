@@ -8,7 +8,7 @@
     </ol>
 </nav>
 <div class="container w-75">
-    <h2 class="text-secondary text-center display-4 pb-3 border-muted border-bottom">{{ user.username|title }}'s Profile</h2>
+    <h2 class="text-secondary text-center display-4 pb-3 border-muted border-bottom">{{ user.username|title }}</h2>
     <br />
     <div class="container p-4 m-2">
         <form enctype="multipart/form-data"  action="{% url 'users:profile' user.id %}" method="POST">
@@ -30,3 +30,5 @@
 </div>
 
 {% endblock content %}
+
+<button type="button" class="btn btn-outline-danger mx-2 mb-2"><a class="text-danger" href="{% url 'users:profile' user.id %}">{% bs_icon 'pencil' size="1.1em" %} Edit</a></button>

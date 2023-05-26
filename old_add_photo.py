@@ -31,3 +31,19 @@ def lens(request):
     return render(request, "photo_site/lens.html", context)
 
 lens = models.CharField(max_length=200, blank=True, null=True)
+
+def profile(request, user_id):
+    """user edit profile page"""
+    profile = Profile.objects.get(user=user_id)
+    if request.method != "POST":
+        # display a blank form
+        form = ProfileForm(instance=profile)
+    else:
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            new_profile = form.save(commit=False)
+            new_profile.save()
+            return redirect("photo_site:index")
+    context = {"profile": profile, "form": form}
+    return render(request, "registration/profile.html", context)
