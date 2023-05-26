@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
+from django.contrib.auth import login
+from django.contrib import messages
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Photo, Comment, Lens
 from .forms import PhotoForm, CommentForm, LensForm
 from users.models import Profile
 import random
+from users.forms import NewUserForm
 
 
 # Views for photo_site App
@@ -20,8 +23,23 @@ def index(request):
     y = random.randint(1, len(photos))
     photo2_id = y
     photo2 = Photo.objects.get(id=photo2_id)
-    context = {"photo": photo, "photo2": photo2}
 
+    # Handle New User registration form in Modal
+    if request.method == "POST":
+        # Process form data
+        form = NewUserForm(data=request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            # log user in and redirect to home page
+            login(request, user)
+            messages.success(request, "Registration successful.")
+            return redirect("photo_site:index")
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+
+    else:
+        form = NewUserForm()
+    context = {"photo": photo, "photo2": photo2, "form": form}
     return render(request, "photo_site/index.html", context)
 
 
@@ -83,25 +101,35 @@ def photo(request, photo_id):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
-    # Handle CommentForm submission
+    # Handle CommentForm and PhotoForm modals
+    comment_form = CommentForm()
+    photo_form = PhotoForm(instance=photo)
     if request.method == "POST":
-        # POST data submitted and process data
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.photo = photo
-            new_comment.owner = request.user
-            new_comment.save()
-            return redirect("photo_site:photo", photo_id=photo_id)
-    else:
-        # display a blank comment form
-        form = CommentForm()
+        # Handle CommentForm submission
+        if "add_comment" in request.POST:
+            # POST data submitted and process data
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.photo = photo
+                new_comment.owner = request.user
+                new_comment.save()
+                return redirect("photo_site:photo", photo_id=photo_id)
+        # Handle PhotoForm submission
+        elif "edit_photo" in request.POST:
+            # POST data submitted and process data
+            photo_form = PhotoForm(request.POST, request.FILES, instance=photo)
+            if photo_form.is_valid():
+                photo_form.save()
+                return redirect("photo_site:photo", photo_id=photo_id)
+
     context = {
         "photo": photo,
         "current_user": current_user,
         "comments": comments,
         "page_obj": page_obj,
-        "form": form,
+        "comment_form": comment_form,
+        "photo_form": photo_form,
     }
     return render(request, "photo_site/photo.html", context)
 
@@ -154,4 +182,3 @@ def about(request):
     photo = Photo.objects.get(id=x)
     context = {"photo": photo}
     return render(request, "photo_site/about.html", context)
-

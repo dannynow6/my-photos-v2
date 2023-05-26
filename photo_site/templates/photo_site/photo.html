@@ -55,7 +55,7 @@
             <button class="btn btn-outline-info" data-toggle="modal" data-target="#commentModal">{% bs_icon "chat-text" %} <span class="text-secondary">Comment</span></button>
             {% endif %}
             {% if photo.owner == current_user %}
-            <button type="button" class="btn btn-outline-danger"><a class="text-danger nav-link" href="{% url 'photo_site:edit_photo' photo.id %}">{% bs_icon 'pencil' %} Edit</a></button>
+            <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#editPhotoModal">{% bs_icon 'pencil' %} <span class="text-seondary">Edit</span></button>
             {% endif %}
         </div>
         <br /> 
@@ -102,14 +102,38 @@
               <form method="post" action="{% url 'photo_site:photo' photo.id %}">
                 {% csrf_token %}
                 <p>
-                  {{ form.as_p }}
+                  {{ comment_form.as_p }}
                 </p>
-                <button type="submit" class="btn btn-primary float-right" name="add_comment">{% bs_icon 'save' %} Save</button>
+                <button type="submit" class="btn btn-outline-primary float-right" name="add_comment">{% bs_icon 'save' %} Save</button>
               </form>
             </div>
           </div>
         </div>
-      </div>
+    </div>
+
+    <!--Edit Photo Modal-->
+    <div class="modal fade" id="editPhotoModal" tabindex="-1" role="dialog" aria-labelledby="editPhoto" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editPhotoModalLabel">Edit Photo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- Edit Photo Form embedded in Modal -->
+              <form enctype="multipart/form-data" method="post" action="{% url 'photo_site:photo' photo.id %}">
+                {% csrf_token %}
+                <p>
+                  {{ photo_form.as_p }}
+                </p>
+                <button type="submit" class="btn btn-outline-primary float-right" name="edit_photo">{% bs_icon 'image' %} Save</button>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
 </div>
 <br /> 
 {% endblock content %}

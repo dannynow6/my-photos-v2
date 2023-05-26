@@ -5,18 +5,18 @@ from . import views
 
 app_name = "photo_site"
 urlpatterns = [
-    # Home page
+    # Home page - Handles registration in modal
     path("", views.index, name="index"),
     # Add photo page with add lens modal
     path("add_photo/", views.add_photo, name="add_photo"),
     # View photos uploaded by users
     path("photos/", views.photos, name="photos"),
-    # View details of a specific photo & Comment on photo 
+    # View details of a specific photo & Comment on photo
     path("photo/<int:photo_id>/", views.photo, name="photo"),
     # display all of a user's photos
     path("my_photos/", views.my_photos, name="my_photos"),
     # page for user to edit their photo
-    path("edit_photo/<int:photo_id>/", views.edit_photo, name="edit_photo"),
+    # path("edit_photo/<int:photo_id>/", views.edit_photo, name="edit_photo"),
     # about page for photo site
     path("about/", views.about, name="about"),
     # create a new comment on a photograph

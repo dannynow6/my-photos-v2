@@ -15,7 +15,8 @@
     <br />
     <div class="container text-center text-secondary">
         <p>
-            Create an account, store photos, and more...
+            <a href="{% url 'photo_site:index' %}" alt="home"><img class="about-logo" src="{% static 'img/logo.png' %}" alt="photo-site logo" style="max-height:35px;max-width=35px" /></a>
+            Create an account, upload your work, engage with others, and more...
         </p>
     </div>
     <br />
@@ -33,7 +34,7 @@
     </div>
     <br />
     <div class="container d-flex justify-content-around">
-        <a href="{% url 'photo_site:index' %}" alt="home"><img class="about-logo" src="{% static 'img/logo.png' %}" alt="photo-site logo" style="max-height:35px;max-width=35px" /></a>
+        
         <article class="text-center text-secondary">
             <p>
                 <a class="about-link" href="mailto:photo_site@example.com">{% bs_icon 'envelope-at' size="1.5rem" %}</a>

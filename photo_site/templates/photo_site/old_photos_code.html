@@ -77,3 +77,19 @@ def comment(request, photo_id):
 
 
     <button type="button" class="btn btn-outline-info"><a class="text-secondary nav-link" href="{% url 'photo_site:comment' photo.id %}"><span class="text-info">{% bs_icon 'chat-square-text' %}</span> Comment</a></button>
+
+
+<!--Dropdown menu for when user not logged in-->
+{% else %}
+<button class="btn btn-outline-muted dropdown-toggle text-secondary" type="button" data-toggle="dropdown" aria-expanded="false">
+    Sign in
+</button>
+<div class="dropdown-menu">
+    <a class="dropdown-item text-secondary" href="{% url 'users:register' %}">{% bs_icon 'person-add' %} Register</a>
+    <a class="dropdown-item text-secondary" href="{% url 'users:login' %}">{% bs_icon 'box-arrow-in-right' %} Log in</a>
+</div>
+{% endif %}
+
+<!--changing register user to modal-->
+<a class="nav-link" href="{% url 'users:register' %}">{% bs_icon 'person-add' %} Create Account</a>
+
