@@ -1,13 +1,14 @@
 {% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
 {% block title %}{{ user.username|title }} Profile{% endblock title %}
 {% block content %}
-<nav aria-label="breadcrumb">
+<div class="container w-75">
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-white">
         <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ user.username|title }}'s Profile</li>
     </ol>
-</nav>
-<div class="container w-75">
+  </nav>
+  <br />
     {% if profile.photo %}
     <h2 class="text-center display-4 pb-3" id="profile-title"><img src="{{ profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%" /> {{ user.username|title }}</h2>
     {% else %}
