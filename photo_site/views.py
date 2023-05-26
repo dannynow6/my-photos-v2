@@ -73,6 +73,7 @@ def photos(request):
     return render(request, "photo_site/photos.html", context)
 
 
+@login_required
 def photo(request, photo_id):
     """Show the details of a specific photo"""
     current_user = request.user
@@ -81,11 +82,26 @@ def photo(request, photo_id):
     paginator = Paginator(comments, 5)  # Show 5 comments per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
+
+    # Handle CommentForm submission
+    if request.method == "POST":
+        # POST data submitted and process data
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.photo = photo
+            new_comment.owner = request.user
+            new_comment.save()
+            return redirect("photo_site:photo", photo_id=photo_id)
+    else:
+        # display a blank comment form
+        form = CommentForm()
     context = {
         "photo": photo,
         "current_user": current_user,
         "comments": comments,
         "page_obj": page_obj,
+        "form": form,
     }
     return render(request, "photo_site/photo.html", context)
 
@@ -139,23 +155,3 @@ def about(request):
     context = {"photo": photo}
     return render(request, "photo_site/about.html", context)
 
-
-@login_required
-def comment(request, photo_id):
-    """User add a new comment on a photo"""
-    photo = Photo.objects.get(id=photo_id)
-
-    if request.method != "POST":
-        # no data submitted - create a blank form
-        form = CommentForm()
-    else:
-        # POST data submitted and process data
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.photo = photo
-            new_comment.owner = request.user
-            new_comment.save()
-            return redirect("photo_site:photo", photo_id=photo_id)
-    context = {"photo": photo, "form": form}
-    return render(request, "photo_site/comment.html", context)

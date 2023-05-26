@@ -11,7 +11,7 @@ urlpatterns = [
     path("add_photo/", views.add_photo, name="add_photo"),
     # View photos uploaded by users
     path("photos/", views.photos, name="photos"),
-    # View details of a specific photo
+    # View details of a specific photo & Comment on photo 
     path("photo/<int:photo_id>/", views.photo, name="photo"),
     # display all of a user's photos
     path("my_photos/", views.my_photos, name="my_photos"),
@@ -20,7 +20,7 @@ urlpatterns = [
     # about page for photo site
     path("about/", views.about, name="about"),
     # create a new comment on a photograph
-    path("comment/<int:photo_id>/", views.comment, name="comment"),
+    # path("comment/<int:photo_id>/", views.comment, name="comment"),
     # Add lens info
     # path("lens/", views.lens, name="lens"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

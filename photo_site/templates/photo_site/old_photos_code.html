@@ -51,3 +51,29 @@
 
 
 {% endblock content %}
+
+
+
+
+@login_required
+def comment(request, photo_id):
+    """User add a new comment on a photo"""
+    photo = Photo.objects.get(id=photo_id)
+
+    if request.method != "POST":
+        # no data submitted - create a blank form
+        form = CommentForm()
+    else:
+        # POST data submitted and process data
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.photo = photo
+            new_comment.owner = request.user
+            new_comment.save()
+            return redirect("photo_site:photo", photo_id=photo_id)
+    context = {"photo": photo, "form": form}
+    return render(request, "photo_site/comment.html", context)
+
+
+    <button type="button" class="btn btn-outline-info"><a class="text-secondary nav-link" href="{% url 'photo_site:comment' photo.id %}"><span class="text-info">{% bs_icon 'chat-square-text' %}</span> Comment</a></button>
