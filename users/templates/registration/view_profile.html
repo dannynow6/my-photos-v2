@@ -17,14 +17,29 @@
     <br />
     <div class="container p-4 m-2">
         <article class="text-center text-secondary">
-            <h6>Bio</h6>
+          <article class="d-flex justify-content-center">
+            <p class="font-weight-bold mr-2">Bio</p>
             <p>{{ profile.bio }}</p>
+          </article>
+          {% if user.first_name and user.last_name %}
+          <article class="d-flex justify-content-center">
+            <p class="mr-2 font-weight-bold">Name</p>
             <p>{{ user.first_name|title }} {{ user.last_name|title }}</p>
-            <p>Age: {{ profile.age }}</p>
-        </article>
-        <article class="text-center text-secondary">
-            <h6>Location</h6>
+          </article>
+          {% elif user.first_name %}
+          <article class="d-flex justify-content-center">
+            <p class="mr-2 font-weight-bold">Name</p>
+            <p>{{ user.first_name|title }}</p>
+          </article>
+          {% endif %}
+          <article class="d-flex justify-content-center">
+            <p class="mr-2 font-weight-bold">Age</p>
+            <p>{{ profile.age }}</p>
+          </article>
+          <article class="d-flex justify-content-center">
+            <p class="mr-2 font-weight-bold">Location</p>
             <p>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</p>
+          </article>
         </article>
         <br/>
         <span class="d-flex justify-content-center">

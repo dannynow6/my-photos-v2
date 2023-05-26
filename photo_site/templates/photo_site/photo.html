@@ -2,8 +2,14 @@
 
 {% block title %}Photo {{ photo.id }}: {{ photo.title|title }}{% endblock title %}
 
-{% block content %}
+{% block content %} 
 <div class="container w-75">
+  {% if photo.title %}
+  <h4 class="display-4 text-center my-2" id="view-photo-title">{{ photo.title|title }}</h4>
+  {% else %}
+  <h4 class="display-4 text-center my-2">No title</h4>
+  {% endif %}
+
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb bg-white">
             <li class="breadcrumb-item"><a href="{% url 'photo_site:index' %}">Home</a></li>
@@ -13,11 +19,6 @@
     </nav>
     <br /> 
     
-    {% if photo.title %}
-    <h4 class="text-secondary text-center mb-3">{{ photo.title|title }}</h4>
-    {% else %}
-    <h4 class="text-secondary text-center mb-3">No title</h4>
-    {% endif %}
     <div class="container w-75">
         <span class="d-flex justify-content-center">
             <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="max-width:750px;max-height:750px;border-radius:15%;" />
