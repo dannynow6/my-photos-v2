@@ -4,18 +4,16 @@
 
 {% block content %}
 <div class="container w-75">
-    <div class="container mb-5">
-        <div class="dropdown mb-3">
-            <a class="btn btn-outline-secondary btn-lg dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">{% bs_icon 'images' size="1.35rem" %} Filter Photos</a>
-
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="?">All</a>
-                {% for photo_type in photo_types %}
-                    <a class="dropdown-item" href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}>{{ photo_type.1 }}</a>
-                {% endfor %}
-            </div>
+    <a class="btn btn-outline-secondary" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
+    <div class="collapse" id="filterOptions">
+        <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
+            <button type="button" class="btn btn-outline-secondary"><a href="?"><span class="text-secondary">All</span></a></button>
+            {% for photo_type in photo_types %}
+            <button type="button" class="btn btn-outline-secondary"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
+            {% endfor %}
         </div>
     </div>
+        
 
     {% if selected_type %}
         <h4 class="display-4 text-center my-2" id="photos-title">{{ selected_type|title }} Photos</h4>
@@ -33,7 +31,7 @@
     <div class="container d-flex justify-content-between flex-wrap">
     {% for photo in photos %}
         <div class="card bg-white text-white mt-2 border-0" >
-            <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:425px;height:250px;border-radius:30%;" />
+            <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:400px;height:225px;border-radius:30%;" />
             <div class="card-img-overlay">
                 <h5 class="photo-title"><a class="photo-title" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
             </div>

@@ -1,3 +1,17 @@
+<!-- Photo Filter options displayed as dropdown -->
+<div class="dropdown mb-3">
+  <a class="btn btn-outline-secondary btn-lg dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">{% bs_icon 'images' size="1.35rem" %} Filter Photos</a>
+
+  <div class="dropdown-menu">
+      <a class="dropdown-item" href="?">All</a>
+      {% for photo_type in photo_types %}
+          <a class="dropdown-item" href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}>{{ photo_type.1 }}</a>
+      {% endfor %}
+  </div>
+</div>
+
+
+
 
 <h4 class="display-3 text-center my-2" id="photos-title">Gallery</h4>
     
