@@ -13,6 +13,14 @@ from users.forms import NewUserForm
 
 # Views for photo_site App
 
+# View for Page Not Found Error
+def page_not_found(request, exception):
+    context = {
+        "error_message": "Page not found",
+        "error_code": 404,
+    }
+    return render(request, "404.html", context, status=404)
+
 
 def index(request):
     """home page for photo_site"""
