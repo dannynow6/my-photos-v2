@@ -21,9 +21,16 @@ def index(request):
     photo_id = x
     photo = Photo.objects.get(id=photo_id)
     y = random.randint(1, len(photos))
-    photo2_id = y
-    photo2 = Photo.objects.get(id=photo2_id)
-
+    if y != x:
+        photo2_id = y
+        photo2 = Photo.objects.get(id=photo2_id)
+    elif y == x:
+        if y == len(photos):
+            photo2_id = y - 1
+            photo2 = Photo.objects.get(id=photo2_id)
+        else:
+            photo2_id = y + 1
+            photo2 = Photo.objects.get(id=photo2_id)
     # Handle New User registration form in Modal
     if request.method == "POST":
         # Process form data
