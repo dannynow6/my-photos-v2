@@ -39,7 +39,7 @@
         </span>
       </article>
     </div>
-    <!--Edit Profile Modal-->
+    {# Edit profile form accessible via Modal #}
     <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="editProfile" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -50,7 +50,6 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- Edit Profile Form embedded in Modal -->
               <form enctype="multipart/form-data" method="post" action="{% url 'users:view_profile' user.id %}">
                 {% csrf_token %}
                 <p>

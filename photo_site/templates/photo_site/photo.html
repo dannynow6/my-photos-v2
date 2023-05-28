@@ -88,7 +88,7 @@
             </span>
         </div>
     </div>
-    <!--Add Comment Modal-->
+    {# Modal for adding comment about a photo #}
     <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="addComment" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -99,7 +99,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- New Comment Form embedded in Modal -->
+              {# New comment form #}
               <form method="post" action="{% url 'photo_site:photo' photo.id %}">
                 {% csrf_token %}
                 <p>
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <!--Edit Photo Modal-->
+    {# Edit photo form #}
     <div class="modal fade" id="editPhotoModal" tabindex="-1" role="dialog" aria-labelledby="editPhoto" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -123,7 +123,6 @@
               </button>
             </div>
             <div class="modal-body">
-              <!-- Edit Photo Form embedded in Modal -->
               <form enctype="multipart/form-data" method="post" action="{% url 'photo_site:photo' photo.id %}">
                 {% csrf_token %}
                 <p>

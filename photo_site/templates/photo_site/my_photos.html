@@ -4,7 +4,7 @@
 
 {% block content %} 
 <div class="container w-75">
-    
+{#   
 <!--Old Filter Method
     <div class="container mb-5">
         <div class="dropdown mb-3">
@@ -19,6 +19,7 @@
         </div>
     </div>
 -->
+#}
     {% if selected_type %}
         <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s {{ selected_type|title }} Photos</h4>
     {% else %}

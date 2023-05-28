@@ -26,7 +26,7 @@
           <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:add_photo' %}">
           {% csrf_token %} 
           
-          <!-- Rendering photo form manually to insert modal -->
+          {# Rendering form fields/labels manually to control where modal button displayed #}
           <div class="form-group">
             {{ photo_form.image.label_tag }}
             {{ photo_form.image }}
@@ -62,6 +62,7 @@
           <div class="form-group">
             {{ photo_form.lens_used.label_tag }}
             {{ photo_form.lens_used }}
+          {# Button to launch modal with add lens form #}
             <button class="btn btn-outline-secondary rounded-pill text-info float-right" data-toggle="modal" data-target="#lensModal">{% bs_icon "plus-circle" %} New Lens</button>
           </div> 
           
@@ -88,7 +89,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <!-- Add Lens info form -->
+           {# Lens form embedded in Modal and accessible via button #}
             <form method="post" action="{% url 'photo_site:add_photo' %}">
               {% csrf_token %}
               <p>
