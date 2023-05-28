@@ -194,6 +194,10 @@ def edit_photo(request, photo_id):
     return render(request, "photo_site/edit_photo.html", context)
 
 
+# Since pulling photo from database for featured on About and Home pages
+# Should handle potential error if no PK matches random number
+# The problem could arise if a photo deleted or something
+# Use a try/except block - with exception just add to the value and try again
 def about(request):
     """An about page featuring basic site information for photo-site"""
     photos = Photo.objects.all()
