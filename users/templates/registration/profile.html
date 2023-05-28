@@ -58,3 +58,22 @@
     <p>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</p>
   </article>
 </article>
+
+<dl class="row">
+  <dt class="col-sm-3 pl-5">Bio</dt>
+  <dd class="col-sm-9">{{ profile.bio }}</dd>
+
+  {% if user.first_name and user.last_name %}
+  <dt class="col-sm-3 pl-5">Name</dt>
+  <dd class="col-sm-9">{{ user.first_name|title }} {{ user.last_name|title }}</dd>
+  {% elif user.first_name %}
+  <dt class="col-sm-3 pl-5">Name</dt>
+  <dd class="col-sm-9">{{ user.first_name|title }}</dd>
+  {% endif %}
+
+  <dt class="col-sm-3 pl-5">Age</dt>
+  <dd class="col-sm-9">{{ profile.age}}</dd>
+
+  <dt class="col-sm-3 pl-5">Location</dt>
+  <dd class="col-sm-9">{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</dd>
+</dl>
