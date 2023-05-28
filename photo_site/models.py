@@ -16,15 +16,11 @@ class Lens(models.Model):
         return f"{self.make}, {self.name}"
 
 
-""" 
-Create a photo type CHOICES field in Photo model. List as choices main types of Photos. Then use these choices as principal filter to allow users to filter photos uploaded to site to view certain types
-"""
-
-#### Added Type Choices list - need to make a new field for it and migrate database
 class Photo(models.Model):
     """a model representation of a photo"""
 
     # Choice list for Photo Type
+    # Type choices can be used to filter photos displayed in gallery templates
     TYPE_CHOICES = [
         ("landscape", "Landscape"),
         ("street", "Street"),

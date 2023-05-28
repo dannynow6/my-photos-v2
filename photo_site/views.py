@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
+from django.http import Http404
 from django.contrib.auth import login
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -27,18 +28,13 @@ def index(request):
     photos = Photo.objects.all()
     x = random.randint(1, len(photos))
     photo_id = x
-    photo = Photo.objects.get(id=photo_id)
+    photo = Photo.objects.get(id=photo_id)  # get Photo with id = x
     y = random.randint(1, len(photos))
-    if y != x:
-        photo2_id = y
-        photo2 = Photo.objects.get(id=photo2_id)
-    elif y == x:
-        if y == len(photos):
-            photo2_id = y - 1
-            photo2 = Photo.objects.get(id=photo2_id)
-        else:
-            photo2_id = y + 1
-            photo2 = Photo.objects.get(id=photo2_id)
+    # If y is the same as x, generate a new number
+    while y == x:
+        y = random.randint(1, len(photos))
+    photo2_id = y
+    photo2 = Photo.objects.get(id=photo2_id)  # get photo with id = y
     # Handle New User registration form in Modal
     if request.method == "POST":
         # Process form data
@@ -110,7 +106,13 @@ def photos(request):
 def photo(request, photo_id):
     """Show the details of a specific photo"""
     current_user = request.user
-    photo = Photo.objects.get(id=photo_id)
+    # Try to find photo matching id number
+    try:
+        photo = Photo.objects.get(id=photo_id)
+    # If no photo with photo_id raise 404 error
+    except Photo.DoesNotExist:
+        raise Http404(f"Photo {photo_id} does not exist")
+
     comments = photo.comment_set.order_by("-date_added")
     paginator = Paginator(comments, 5)  # Show 5 comments per page
     page_number = request.GET.get("page")

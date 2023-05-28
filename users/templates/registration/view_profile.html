@@ -16,35 +16,28 @@
     {% endif %}
     <br />
     <div class="container p-4 m-2">
-        <article class="text-center text-secondary">
-          <article class="d-flex justify-content-center">
-            <p class="font-weight-bold mr-2">Bio</p>
-            <p>{{ profile.bio }}</p>
-          </article>
+      <article class="text-center text-secondary">
+        <dl>
+          <dt class="font-weight-bold">Bio</dt>
+          <dd>{{ profile.bio }}</dd>
           {% if user.first_name and user.last_name %}
-          <article class="d-flex justify-content-center">
-            <p class="mr-2 font-weight-bold">Name</p>
-            <p>{{ user.first_name|title }} {{ user.last_name|title }}</p>
-          </article>
+          <dt class="font-weight-bold">Name</dt>
+          <dd>{{ user.first_name|title }} {{ user.last_name|title }}</dd>
           {% elif user.first_name %}
-          <article class="d-flex justify-content-center">
-            <p class="mr-2 font-weight-bold">Name</p>
-            <p>{{ user.first_name|title }}</p>
-          </article>
+          <dt class="mr-2 font-weight-bold">Name</dt>
+          <dd>{{ user.first_name|title }}</dd>
           {% endif %}
-          <article class="d-flex justify-content-center">
-            <p class="mr-2 font-weight-bold">Age</p>
-            <p>{{ profile.age }}</p>
-          </article>
-          <article class="d-flex justify-content-center">
-            <p class="mr-2 font-weight-bold">Location</p>
-            <p>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</p>
-          </article>
-        </article>
+          <dt class="font-weight-bold">Age</dt>
+          <dd>{{ profile.age }}</dd>
+          <dt class="font-weight-bold">Location</dt>
+          <dd>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</dd>
+        </dl>
+          
         <br/>
         <span class="d-flex justify-content-center">
             <button class="btn btn-outline-danger" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
         </span>
+      </article>
     </div>
     <!--Edit Profile Modal-->
     <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="editProfile" aria-hidden="true">
@@ -63,7 +56,7 @@
                 <p>
                   {{ form.as_p }}
                 </p>
-                <button type="submit" class="btn btn-primary float-right" name="edit_profile">{% bs_icon 'save' %} Save</button>
+                <button type="submit" class="btn btn-outline-primary float-right" name="edit_profile">{% bs_icon 'person-add' %} Save</button>
               </form>
             </div>
           </div>
