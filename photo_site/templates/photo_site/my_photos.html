@@ -34,13 +34,13 @@
     <br />
     
     <span class="d-flex justify-content-center mb-3">
-        <a class="btn btn-outline-secondary" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
+        <a class="btn btn-outline-secondary rounded-pill" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
         </span>
         <div class="collapse" id="filterOptions">
             <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
-                <button type="button" class="btn btn-outline-secondary"><a href="?"><span class="text-secondary">All</span></a></button>
+                <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
                 {% for photo_type in photo_types %}
-                <button type="button" class="btn btn-outline-secondary"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
+                <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
                 {% endfor %}
             </div>
         </div>
@@ -60,7 +60,7 @@
             <h6 class="text-secondary text-center">No Photos</h6>
             <br />
             <span class="d-flex justify-content-center">
-                <button type="button" class="btn btn-outline-primary"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
+                <button type="button" class="btn btn-outline-primary rounded-pill"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
             </span>
     {% endfor %}
         </div>

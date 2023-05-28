@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="container w-75">
-    <a class="btn btn-outline-secondary" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
+    <a class="btn btn-outline-secondary rounded-pill" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
     <div class="collapse" id="filterOptions">
         <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
-            <button type="button" class="btn btn-outline-secondary"><a href="?"><span class="text-secondary">All</span></a></button>
+            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
             {% for photo_type in photo_types %}
-            <button type="button" class="btn btn-outline-secondary"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
+            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
             {% endfor %}
         </div>
     </div>

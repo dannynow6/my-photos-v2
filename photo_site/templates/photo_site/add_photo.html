@@ -62,13 +62,13 @@
           <div class="form-group">
             {{ photo_form.lens_used.label_tag }}
             {{ photo_form.lens_used }}
-            <button class="btn btn-outline-secondary text-info float-right" data-toggle="modal" data-target="#lensModal">{% bs_icon "plus-circle" %} New Lens</button>
+            <button class="btn btn-outline-secondary rounded-pill text-info float-right" data-toggle="modal" data-target="#lensModal">{% bs_icon "plus-circle" %} New Lens</button>
           </div> 
           
             <button
               name="add_photo_submit"
               type="submit"
-              class="btn btn-lg btn-outline-primary"
+              class="btn btn-lg btn-outline-primary rounded-pill"
               role="button"
               alt="submit"
               value="Save"
@@ -88,13 +88,13 @@
             </button>
           </div>
           <div class="modal-body">
-            <!-- Embed your Django form inside the modal body -->
+            <!-- Add Lens info form -->
             <form method="post" action="{% url 'photo_site:add_photo' %}">
               {% csrf_token %}
               <p>
                 {{ lens_form.as_p }}
               </p>
-              <button type="submit" class="btn btn-outline-primary float-right" name="add_lens_submit">{% bs_icon 'save' %} Save</button>
+              <button type="submit" class="btn btn-outline-primary rounded-pill float-right" name="add_lens_submit">{% bs_icon 'save' %} Save</button>
             </form>
           </div>
         </div>

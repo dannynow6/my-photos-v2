@@ -15,7 +15,7 @@ from users.forms import NewUserForm
 # Views for photo_site App
 
 # View for Page Not Found Error
-def page_not_found(request, exception):
+def ps_page_not_found(request, exception):
     context = {
         "error_message": "Page not found",
         "error_code": 404,
@@ -90,7 +90,9 @@ def photos(request):
     selected_type = request.GET.get("photo_type")
     # Retrieve all photos if no type selected, otherwise filter photos by selected type
     if selected_type:
-        photos = Photo.objects.filter(photo_type__iexact=selected_type)
+        photos = Photo.objects.filter(photo_type__iexact=selected_type).order_by(
+            "-date_added"
+        )
     else:
         photos = Photo.objects.order_by("-date_added")
 
