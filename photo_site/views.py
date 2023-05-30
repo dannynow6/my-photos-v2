@@ -202,6 +202,14 @@ def about(request):
     """An about page featuring basic site information for photo-site"""
     photos = Photo.objects.all()
     x = random.randint(1, len(photos))
-    photo = Photo.objects.get(id=x)
+    # Try to get photo with id = x
+    try:
+        photo = Photo.objects.get(id=x)
+    # if photo with id = x no longer exists, generate new number
+    except Photo.DoesNotExist:
+        y = random.randint(1, len(photos))
+        while y == x:
+            y = random.randint(1, len(photos))
+        photo = Photo.objects.get(id=y)
     context = {"photo": photo}
     return render(request, "photo_site/about.html", context)
