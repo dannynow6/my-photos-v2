@@ -28,13 +28,27 @@ def index(request):
     photos = Photo.objects.all()
     x = random.randint(1, len(photos))
     photo_id = x
-    photo = Photo.objects.get(id=photo_id)  # get Photo with id = x
+    try:
+        photo = Photo.objects.get(id=photo_id)  # get Photo with id = x
+    except Photo.DoesNotExist:  # redo if photo with id doesn't exist
+        z = random.randint(1, len(photos))
+        while z == x:
+            z = random.randint(1, len(photos))
+        photo_id = z
+        photo = Photo.objects.get(id=photo_id)
     y = random.randint(1, len(photos))
     # If y is the same as x, generate a new number
     while y == x:
         y = random.randint(1, len(photos))
     photo2_id = y
-    photo2 = Photo.objects.get(id=photo2_id)  # get photo with id = y
+    try:
+        photo2 = Photo.objects.get(id=photo2_id)  # get photo with id = y
+    except Photo.DoesNotExist:
+        w = random.randint(1, len(photos))
+        while w == y or w == x:
+            w = random.randint(1, len(photos))
+        photo2_id = w
+        photo2 = Photo.objects.get(id=photo2_id)
     # Handle New User registration form in Modal
     if request.method == "POST":
         # Process form data
