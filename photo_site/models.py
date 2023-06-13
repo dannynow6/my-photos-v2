@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
+# Implement a lens_used filter for photos as well
+# Lens_used filter will use foreign key relationship to lens model to filter
 class Lens(models.Model):
     """Lens used to take photo"""
 
