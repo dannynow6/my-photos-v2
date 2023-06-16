@@ -51,12 +51,12 @@
     <div class="pagination mt-3 mx-2 text-secondary font-weight-bold d-flex justify-content-between">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a class="px-1" href="?page=1">&laquo; first</a>
-                <a class="px-1" href="?page={{ page_obj.previous_page_number }}">previous</a>
+                <a class="px-1" href="?selected_type={{ selected_type }}&page=1">&laquo; first</a>
+                <a class="px-1" href="?selected_type={{ selected_type }}&page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
             {% if page_obj.has_next %}
-                <a class="px-1" href="?page={{ page_obj.next_page_number }}">next</a>
-                <a class="px-1" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a class="px-1" href="?selected_type={{ selected_type }}&page={{ page_obj.next_page_number }}">next</a>
+                <a class="px-1" href="?selected_type={{ selected_type }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
         <span class="current">
