@@ -101,25 +101,34 @@ def add_photo(request):
 def photos(request):
     """Photos gallery page - allow users to filter results based on photo_type"""
     # Get the selected photo_type from query parameters
-    photos = Photo.objects.order_by("-date_added")
     selected_type = request.GET.get("photo_type")
-    # Retrieve all photos if no type selected, otherwise filter photos by selected type
     if selected_type:
-        photos = Photo.objects.filter(photo_type__iexact=selected_type).order_by(
+        photos1 = Photo.objects.filter(photo_type__iexact=selected_type).order_by(
             "-date_added"
         )
+    else:
+        photos = Photo.objects.order_by("-date_added")
 
-    # Use Pagination to limit # of photos per page & increase load time
-    paginator = Paginator(photos, 6)
-    page_number = request.GET.get("page")
+    # handle pagination if selected_type
     try:
-        page_obj = paginator.get_page(page_number)
-    except ValueError:
-        page_obj = paginator.get_page(1)
+        if photos1:
+            paginator1 = Paginator(photos1, 6)
+            page_number1 = request.GET.get("page")
+            page_obj = paginator1.get_page(page_number1)
+    except UnboundLocalError:
+        pass
+
+    try:
+        if photos:
+            paginator = Paginator(photos, 6)
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+    except UnboundLocalError:
+        pass
 
     context = {
         "photos": photos,
-        "photo_type": selected_type,
+        "selected_type": selected_type,
         "photo_types": Photo.TYPE_CHOICES,
         "page_obj": page_obj,
     }

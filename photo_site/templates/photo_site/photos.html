@@ -27,7 +27,44 @@
         </ol>
     </nav>
     <br />
-    
+    {% if page_obj1 %}
+    <div class="container d-flex justify-content-between flex-wrap">
+        {% for photo in page_obj1 %}
+            <div class="card bg-white text-white mt-2 border-0" >
+                <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:400px;height:225px;border-radius:30%;" />
+                <div class="card-img-overlay">
+                    <h5 class="photo-title"><a class="photo-title" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
+                </div>
+            </div>
+            <br />
+        {% empty %}
+        </div>
+        <div class="container">
+            <h6 class="text-secondary text-center">No Photos</h6>
+            <br />
+            <span class="d-flex justify-content-center">
+                <button type="button" class="btn btn-outline-primary"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
+            </span>
+        {% endfor %}
+    </div>
+
+    <div class="pagination mt-3 mx-2 text-secondary font-weight-bold d-flex justify-content-between">
+        <span class="step-links">
+            {% if page_obj1.has_previous %}
+                <a class="px-1" href="?page=1{% if selected_type %}&selected_type={{ selected_type }}{% endif %}">&laquo; first</a>
+                <a class="px-1" href="?page={{ page_obj1.previous_page_number }}{% if selected_type %}&selected_type={{ selected_type }}{% endif %}">previous</a>
+            {% endif %}
+            {% if page_obj1.has_next %}
+                <a class="px-1" href="?page={{ page_obj1.next_page_number }}{% if selected_type %}&selected_type={{ selected_type }}{% endif %}">next</a>
+                <a class="px-1" href="?page={{ page_obj1.paginator1.num_pages }}{% if selected_type %}&selected_type={{ selected_type }}{% endif %}">last &raquo;</a>
+            {% endif %}
+        </span>
+        <span class="current">
+            Page {{ page_obj1.number }} of {{ page_obj1.paginator1.num_pages }}
+        </span>
+    </div>
+    {% endif %}
+
     <div class="container d-flex justify-content-between flex-wrap">
     {% for photo in page_obj %}
         <div class="card bg-white text-white mt-2 border-0" >
@@ -47,22 +84,25 @@
         </span>
     {% endfor %}
     </div>
-    {# pagination buttons to cycle through pages of content #}
+
     <div class="pagination mt-3 mx-2 text-secondary font-weight-bold d-flex justify-content-between">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a class="px-1" href="?selected_type={{ selected_type }}&page=1">&laquo; first</a>
-                <a class="px-1" href="?selected_type={{ selected_type }}&page={{ page_obj.previous_page_number }}">previous</a>
+                <a class="px-1" href="?page=1">&laquo; first</a>
+                <a class="px-1" href="?page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
             {% if page_obj.has_next %}
-                <a class="px-1" href="?selected_type={{ selected_type }}&page={{ page_obj.next_page_number }}">next</a>
-                <a class="px-1" href="?selected_type={{ selected_type }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                <a class="px-1" href="?page={{ page_obj.next_page_number }}">next</a>
+                <a class="px-1" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
         <span class="current">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         </span>
     </div>
+  
+    
+    
 </div>
 
 {% endblock content %}
