@@ -100,7 +100,7 @@ def add_photo(request):
 
 def photos(request):
     """Photos gallery page - allow users to filter results based on photo_type"""
-    # Get the selected photo_type from query parameters 
+    # Get the selected photo_type from query parameters
     selected_type = request.GET.get("photo_type")
     # Retrieve all photos if no type selected, otherwise filter photos by selected type
     if selected_type:
@@ -110,10 +110,16 @@ def photos(request):
     else:
         photos = Photo.objects.order_by("-date_added")
 
+    # Use Pagination to limit # of photos per page & increase load time
+    paginator = Paginator(photos, 6)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
         "photos": photos,
         "selected_type": selected_type,
         "photo_types": Photo.TYPE_CHOICES,
+        "page_obj": page_obj,
     }
     return render(request, "photo_site/photos.html", context)
 

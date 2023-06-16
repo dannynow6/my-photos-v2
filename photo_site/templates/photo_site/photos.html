@@ -1,4 +1,4 @@
-{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %} 
 
 {% block title %}Photos{% endblock title %}
 
@@ -29,7 +29,7 @@
     <br />
     
     <div class="container d-flex justify-content-between flex-wrap">
-    {% for photo in photos %}
+    {% for photo in page_obj %}
         <div class="card bg-white text-white mt-2 border-0" >
             <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:400px;height:225px;border-radius:30%;" />
             <div class="card-img-overlay">
@@ -46,6 +46,22 @@
             <button type="button" class="btn btn-outline-primary"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
         </span>
     {% endfor %}
+    </div>
+    {# pagination buttons to cycle through pages of content #}
+    <div class="pagination mt-3 mx-2 text-secondary font-weight-bold d-flex justify-content-between">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a class="px-1" href="?page=1">&laquo; first</a>
+                <a class="px-1" href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a class="px-1" href="?page={{ page_obj.next_page_number }}">next</a>
+                <a class="px-1" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
     </div>
 </div>
 
