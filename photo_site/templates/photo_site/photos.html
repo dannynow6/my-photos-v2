@@ -4,16 +4,43 @@
 
 {% block content %} 
 <div class="container w-75">
-    <a class="btn btn-outline-secondary rounded-pill" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
-    <div class="collapse" id="filterOptions">
-        <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
-            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
-            {% for photo_type in photo_types %}
-            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
-            {% endfor %}
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-outline-secondary rounded-pill" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
+        <div class="collapse" id="filterOptions">
+            <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
+                <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
+                {% for photo_type in photo_types %}
+                <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
+                {% endfor %}
+            </div>
         </div>
+
+        {# button to launch modal with search bar #}
+        <button class="btn btn-outline-secondary rounded-pill text-info" data-toggle="modal" data-target="#searchModal">{% bs_icon "search" %} Search Photos</button>
     </div>
-        
+    {# Search Modal #}
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="search-photos" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="searchModalLabel">Search Photos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+           {# search photos form #}
+            <form method="GET" action="{% url 'photo_site:photos' %}">
+              <div class="form-group">
+                <label for="SearchValue">Enter Keyword</label>
+                <input type="text" class="form-control" id="SearchValue" name="SearchValue" required maxlength="20" size="22" />
+                </div>
+              <button type="submit" class="btn btn-outline-primary rounded-pill float-right" role="button" alt="submit" value="submit">{% bs_icon 'search' %} Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     {% if selected_type %}
         <h4 class="display-4 text-center my-2" id="photos-title">{{ selected_type|title }} Photos</h4>

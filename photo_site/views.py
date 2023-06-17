@@ -103,11 +103,20 @@ def photos(request):
     """Photos gallery page - allow users to filter results based on photo_type"""
     # Get the selected photo_type from query parameters
     selected_type = request.GET.get("photo_type")
-    photos = Photo.objects.order_by("-date_added")
+    # Get search value
+    search_value = request.GET.get("SearchValue", "")
     if selected_type:
         photos = Photo.objects.filter(photo_type__iexact=selected_type).order_by(
             "-date_added"
         )
+
+    elif search_value:
+        photos = Photo.objects.filter(keywords__icontains=search_value).order_by(
+            "-date_added"
+        )
+
+    else:
+        photos = Photo.objects.order_by("-date_added")
 
     paginator = Paginator(photos, 6)
     page_number = request.GET.get("page")
