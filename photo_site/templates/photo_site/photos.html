@@ -44,6 +44,8 @@
 
     {% if selected_type %}
         <h4 class="display-4 text-center my-2" id="photos-title">{{ selected_type|title }} Photos</h4>
+    {% elif search_value %}
+        <h4 class="display-4 text-center my-2" id="photos-title">{{ search_value|title }} Photos</h4>
     {% else %}
         <h4 class="display-3 text-center my-2" id="photos-title">Gallery</h4>
     {% endif %}

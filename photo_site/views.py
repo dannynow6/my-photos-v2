@@ -130,6 +130,7 @@ def photos(request):
     context = {
         "photos": page_obj,  # this ensures that photos only pulled from one variable
         "selected_type": selected_type,
+        "search_value": search_value,
         "photo_types": Photo.TYPE_CHOICES,
         "page_obj": page_obj,
         "query_params": query_params.urlencode(),
@@ -246,6 +247,7 @@ def about(request):
         photo = Photo.objects.get(id=y)
     context = {"photo": photo}
     return render(request, "photo_site/about.html", context)
+
 
 """
 def search_photos(request):
