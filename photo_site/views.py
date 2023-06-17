@@ -122,11 +122,17 @@ def photos(request):
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
 
+    # build the query parameters for pagination links
+    query_params = request.GET.copy()
+    if "page" in query_params:
+        del query_params["page"]
+
     context = {
         "photos": page_obj,  # this ensures that photos only pulled from one variable
         "selected_type": selected_type,
         "photo_types": Photo.TYPE_CHOICES,
         "page_obj": page_obj,
+        "query_params": query_params.urlencode(),
     }
     return render(request, "photo_site/photos.html", context)
 
