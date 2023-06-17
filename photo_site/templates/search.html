@@ -1,0 +1,43 @@
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %} 
+
+{% block title %}Search Photos{% endblock title %}
+
+{% block content %} 
+
+
+<div class="container d-flex justify-content-between flex-wrap">
+
+    <h3 class="text-secondary p-4 border-bottom">Search Photos</h3>
+    <div class="container p-4 my-2">
+      <form action="{% url 'photo_site:search_photos' %}" method="GET">
+  
+          <div class="form-group">
+              <label for="SearchValue">Enter Keyword</label>
+              <input type="text" class="form-control" id="SearchValue" name="SearchValue" required maxlength="50" size="55" />
+          </div>
+          <button type="submit" class="btn btn-outline-primary" role="button" alt="submit" value="submit">Search</button>
+      </form>
+    </div>
+
+{% if photos %}
+    {% for photo in photos %}
+        <div class="card bg-white text-white mt-2 border-0" >
+            <img src="{{ photo.image.url }}" class="card-img-top" alt="{{ photo.title }}" style="max-width:400px;height:225px;border-radius:30%;" />
+            <div class="card-img-overlay">
+                <h5 class="photo-title"><a class="photo-title" href="{% url 'photo_site:photo' photo.id %}">{{ photo.title|title }}</a></h5>
+            </div>
+        </div>
+        <br />
+    {% endfor %}
+{% endif %}
+
+{% if error_msg %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_msg }}
+        </div>
+{% endif %}
+</div>
+
+
+
+{% endblock content %}

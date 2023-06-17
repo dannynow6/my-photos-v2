@@ -5,6 +5,7 @@ from django.contrib.auth import login
 from django.contrib import messages
 from django.core.paginator import Paginator  # , EmptyPage
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from .models import Photo, Comment, Lens
 from .forms import PhotoForm, CommentForm, LensForm
 from users.models import Profile
@@ -113,7 +114,7 @@ def photos(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        "photos": page_obj,
+        "photos": page_obj,  # this ensures that photos only pulled from one variable
         "selected_type": selected_type,
         "photo_types": Photo.TYPE_CHOICES,
         "page_obj": page_obj,
@@ -230,3 +231,18 @@ def about(request):
         photo = Photo.objects.get(id=y)
     context = {"photo": photo}
     return render(request, "photo_site/about.html", context)
+
+
+def search_photos(request):
+    search_value = request.GET.get("SearchValue", "")
+
+    try:
+        photos = Photo.objects.filter(keywords__icontains=search_value)
+    except ObjectDoesNotExist:
+        error_msg = "There are no photos containing those keywords"
+        messages.error(request, error_msg)
+        context = {"error_msg": error_msg}
+        return render(request, "search.html", context)
+
+    context = {"photos": photos}
+    return render(request, "search.html", context)
