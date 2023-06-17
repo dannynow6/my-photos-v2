@@ -247,7 +247,7 @@ def about(request):
     context = {"photo": photo}
     return render(request, "photo_site/about.html", context)
 
-
+"""
 def search_photos(request):
     search_value = request.GET.get("SearchValue", "")
 
@@ -261,3 +261,4 @@ def search_photos(request):
 
     context = {"photos": photos}
     return render(request, "search.html", context)
+"""

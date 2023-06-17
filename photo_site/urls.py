@@ -20,7 +20,7 @@ urlpatterns = [
     # about page for photo site
     path("about/", views.about, name="about"),
     # a page for searching photos 
-    path("search/", views.search_photos, name="search_photos"), 
+    # path("search/", views.search_photos, name="search_photos"), 
     # create a new comment on a photograph
     # path("comment/<int:photo_id>/", views.comment, name="comment"),
     # Add lens info
