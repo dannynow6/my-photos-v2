@@ -18,7 +18,18 @@
         </ol>
     </nav>
     <br /> 
-    
+    {# display any messages #}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <h4 class="alert-heading">Photo Edited</h4>
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="container w-75">
         <span class="d-flex justify-content-center">
             <img src="{{ photo.image.url }}" alt="{{ photo.title }}" style="max-width:825px;max-height:825px;border-radius:15%;" />

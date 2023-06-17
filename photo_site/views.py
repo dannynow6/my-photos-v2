@@ -84,7 +84,10 @@ def add_photo(request):
                 new_photo = photo_form.save(commit=False)
                 new_photo.owner = request.user
                 new_photo.save()
-                return redirect("photo_site:index")
+                # create a success msg to notify user
+                messages.success(request, "Your photo was saved successfully!")
+                # redirect user to photos page
+                return redirect("photo_site:photos")
         # Handle the add lens form
         elif "add_lens_submit" in request.POST:
             lens_form = LensForm(request.POST)
@@ -174,6 +177,8 @@ def photo(request, photo_id):
             photo_form = PhotoForm(request.POST, request.FILES, instance=photo)
             if photo_form.is_valid():
                 photo_form.save()
+                # create a success msg to notify user
+                messages.success(request, "Your photo was successfully edited!")
                 return redirect("photo_site:photo", photo_id=photo_id)
 
     context = {
@@ -212,9 +217,10 @@ def my_photos(request):
     return render(request, "photo_site/my_photos.html", context)
 
 
+"""
 @login_required
 def edit_photo(request, photo_id):
-    """User can edit their own photo"""
+    # User can edit their own photo
     photo = Photo.objects.get(id=photo_id)
 
     if request.method != "POST":
@@ -223,10 +229,12 @@ def edit_photo(request, photo_id):
         form = PhotoForm(request.POST, request.FILES, instance=photo)
         if form.is_valid():
             form.save()
+            # create a success msg to notify user
+            messages.success(request, "Your photo was successfully edited!")
             return redirect("photo_site:my_photos")
     context = {"form": form, "photo": photo}
     return render(request, "photo_site/edit_photo.html", context)
-
+"""
 
 # Since pulling photo from database for featured on About and Home pages
 # Should handle potential error if no PK matches random number

@@ -1,4 +1,4 @@
-{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %}
+{% extends "photo_site/base.html" %} {% load static %} {% load bootstrap4 %} {% load bootstrap_icons %} 
 
 {% block title %}{{ user.username|title }}'s Photos{% endblock title %}
 
@@ -17,7 +17,7 @@
         </ol>
     </nav>
     <br />
-    
+
     <span class="d-flex justify-content-center mb-3">
         <a class="btn btn-outline-secondary rounded-pill" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
         </span>
