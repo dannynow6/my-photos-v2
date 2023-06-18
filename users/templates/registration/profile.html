@@ -77,3 +77,28 @@
   <dt class="col-sm-3 pl-5">Location</dt>
   <dd class="col-sm-9">{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</dd>
 </dl>
+
+
+
+<article class="text-secondary ml-5">
+  <dl>
+    <dt class="font-weight-bold">Bio</dt>
+    <dd>{{ profile.bio }}</dd>
+    {% if user.first_name and user.last_name %}
+    <dt class="font-weight-bold">Name</dt>
+    <dd>{{ user.first_name|title }} {{ user.last_name|title }}</dd>
+    {% elif user.first_name %}
+    <dt class="mr-2 font-weight-bold">Name</dt>
+    <dd>{{ user.first_name|title }}</dd>
+    {% endif %}
+    <dt class="font-weight-bold">Age</dt>
+    <dd>{{ profile.age }}</dd>
+    <dt class="font-weight-bold">Location</dt>
+    <dd>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</dd>
+  </dl>
+    
+  <br/>
+  <span class="d-flex justify-content-center">
+      <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
+  </span>
+</article>
