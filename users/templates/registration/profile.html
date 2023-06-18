@@ -102,3 +102,31 @@
       <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
   </span>
 </article>
+
+
+<div class="card" style="width: 22rem;">
+  <img class="card-img-top" src="{{ profile.photo.url }}" alt="{{ user.username }}" />
+  <div class="card-body">
+    <h5 class="card-title">{{ user.username|title }}'s Profile</h5>
+    <p class="card-text">
+      <dl>
+        <dt class="font-weight-bold">Bio</dt>
+        <dd>{{ profile.bio }}</dd>
+        {% if user.first_name and user.last_name %}
+        <dt class="font-weight-bold">Name</dt>
+        <dd>{{ user.first_name|title }} {{ user.last_name|title }}</dd>
+        {% elif user.first_name %}
+        <dt class="mr-2 font-weight-bold">Name</dt>
+        <dd>{{ user.first_name|title }}</dd>
+        {% endif %}
+        <dt class="font-weight-bold">Age</dt>
+        <dd>{{ profile.age }}</dd>
+        <dt class="font-weight-bold">Location</dt>
+        <dd>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</dd>
+      </dl>
+    </p>
+    <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
+  </div>
+</div>
+
+</div>

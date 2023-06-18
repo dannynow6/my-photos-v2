@@ -15,33 +15,32 @@
     <h2 class="text-center display-4 pb-3" id="profile-title">{{ user.username|title }}</h2>
     {% endif %}
     <br />
-    <div class="d-flex justify-content-center">
-      <div class="card" style="width: 22rem;">
-        <img class="card-img-top" src="{{ profile.photo.url }}" alt="{{ user.username }}" />
-        <div class="card-body">
-          <h5 class="card-title">{{ user.username|title }}'s Profile</h5>
-          <p class="card-text">
-            <dl>
-              <dt class="font-weight-bold">Bio</dt>
-              <dd>{{ profile.bio }}</dd>
-              {% if user.first_name and user.last_name %}
-              <dt class="font-weight-bold">Name</dt>
-              <dd>{{ user.first_name|title }} {{ user.last_name|title }}</dd>
-              {% elif user.first_name %}
-              <dt class="mr-2 font-weight-bold">Name</dt>
-              <dd>{{ user.first_name|title }}</dd>
-              {% endif %}
-              <dt class="font-weight-bold">Age</dt>
-              <dd>{{ profile.age }}</dd>
-              <dt class="font-weight-bold">Location</dt>
-              <dd>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }}</dd>
-            </dl>
-          </p>
-          <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
-        </div>
-      </div>
-
+    <div class="container w-75">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span class="font-weight-bold">Bio </span>{{ profile.bio }} 
+        </li>
+        {% if user.first_name and user.last_name %}
+        <li class="list-group-item">
+          <span class="font-weight-bold">Name </span>{{ user.first_name|title }} {{ user.last_name|title }} 
+        </li>
+        {% elif user.first_name %}
+        <li class="list-group-item">
+          <span class="font-weight-bold">Name </span>{{ user.first_name|title }} 
+        </li>
+        {% endif %}
+        <li class="list-group-item">
+          <span class="font-weight-bold">Age </span>{{ profile.Age }} 
+        </li>
+        <li class="list-group-item">
+          <span class="font-weight-bold">Location </span>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }} 
+        </li>
+        <li class="list-group-item">
+          <button class="btn btn-outline-danger rounded-pill float-right my-3" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
+        </li>
+      </ul>
     </div>
+
     {# Edit profile form accessible via Modal #}
     <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="editProfile" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -64,6 +63,7 @@
           </div>
         </div>
       </div>
+    </div>
 </div>
 
 {% endblock content %}
