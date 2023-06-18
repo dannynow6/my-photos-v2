@@ -30,13 +30,15 @@
         </li>
         {% endif %}
         <li class="list-group-item">
-          <span class="font-weight-bold">Age </span>{{ profile.Age }} 
+          <span class="font-weight-bold">Age </span>{{ profile.age }} 
         </li>
         <li class="list-group-item">
           <span class="font-weight-bold">Location </span>{{ profile.location_city|title }}, {{ profile.location_state|title }}, {{ profile.location_country|upper }} 
         </li>
         <li class="list-group-item">
-          <button class="btn btn-outline-danger rounded-pill float-right my-3" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
+          <span class="d-flex justify-content-center">
+          <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
+          </span>
         </li>
       </ul>
     </div>
@@ -57,7 +59,9 @@
                 <p>
                   {{ form.as_p }}
                 </p>
-                <button type="submit" class="btn btn-outline-primary rounded-pill float-right" name="edit_profile">{% bs_icon 'person-add' %} Save</button>
+                <span class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-primary rounded-pill" name="edit_profile">{% bs_icon 'person-add' %} Save</button>
+                </span>
               </form>
             </div>
           </div>
