@@ -17,8 +17,12 @@
 
         {# button to launch modal with search bar #}
         <button class="btn btn-outline-secondary rounded-pill text-info" data-toggle="modal" data-target="#searchModal">{% bs_icon "search" %} Search Photos</button>
+
+        {# button to launch modal for search photo id #}
+        <button class="btn btn-outline-secondary rounded-pill text-primary" data-toggle="modal" data-target="#photoIDModal">{% bs_icon "search" %} Search Photo ID</button>
     </div>
-    {# Search Modal #}
+
+    {# Search Modal for Keyword search #}
     <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="search-photos" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -42,10 +46,36 @@
       </div>
     </div>
 
+    {# Search Modal for search photoID #}
+    <div class="modal fade" id="photoIDModal" tabindex="-1" role="dialog" aria-labelledby="search-photo-id" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="photoIDModalLabel">Search Photo ID</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+             {# search photo ID form #}
+              <form method="GET" action="{% url 'photo_site:photos' %}">
+                <div class="form-group">
+                  <label for="photoID">Enter Photo ID</label>
+                  <input type="text" class="form-control" id="photoID" name="photoID" required maxlength="20" size="22" />
+                  </div>
+                <button type="submit" class="btn btn-outline-primary rounded-pill float-right" role="button" alt="submit" value="submit">{% bs_icon 'search' %} Search</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     {% if selected_type %}
         <h4 class="display-4 text-center my-2" id="photos-title">{{ selected_type|title }} Photos</h4>
     {% elif search_value %}
         <h4 class="display-4 text-center my-2" id="photos-title">{{ search_value|title }} Photos</h4>
+    {% elif search_id %}
+        <h4 class="display-4 text-center my-2" id="photos-title">Photo Search ID-{{ search_id }} Results</h4>
     {% else %}
         <h4 class="display-3 text-center my-2" id="photos-title">Gallery</h4>
     {% endif %}
@@ -84,7 +114,7 @@
         <h6 class="text-secondary text-center">No Photos</h6>
         <br />
         <span class="d-flex justify-content-center">
-            <button type="button" class="btn btn-outline-primary"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
+            <button type="button" class="btn btn-outline-primary rounded-pill"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
         </span>
     {% endfor %}
     </div>

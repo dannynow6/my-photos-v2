@@ -108,6 +108,9 @@ def photos(request):
     selected_type = request.GET.get("photo_type")
     # Get search value
     search_value = request.GET.get("SearchValue", "")
+    # Get ID search value
+    search_id = request.GET.get("photoID", "")
+
     if selected_type:
         photos = Photo.objects.filter(photo_type__iexact=selected_type).order_by(
             "-date_added"
@@ -117,6 +120,9 @@ def photos(request):
         photos = Photo.objects.filter(keywords__icontains=search_value).order_by(
             "-date_added"
         )
+
+    elif search_id:
+        photos = Photo.objects.filter(id__icontains=search_id).order_by("-date_added")
 
     else:
         photos = Photo.objects.order_by("-date_added")
@@ -134,6 +140,7 @@ def photos(request):
         "photos": page_obj,  # this ensures that photos only pulled from one variable
         "selected_type": selected_type,
         "search_value": search_value,
+        "search_id": search_id,
         "photo_types": Photo.TYPE_CHOICES,
         "page_obj": page_obj,
         "query_params": query_params.urlencode(),
