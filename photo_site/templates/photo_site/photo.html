@@ -41,7 +41,7 @@
         <br />
         <p class="text-center text-secondary">Image by {{ photo.owner|title }}</p>
 
-        <ul class="list-group rounded">
+        <ul class="list-group list-group-flush">
             {% if photo.photo_type %}
             <li class="list-group-item"><span class="font-weight-bold">{{ photo.photo_type|title }}</span> Photo</li>
             {% endif %}
@@ -75,7 +75,7 @@
             {% for comment in page_obj %}
             <li class="list-group-item">
                 <article class="mx-3">
-                    <p class="text-secondary text-left">- {{ comment.comment }}</p>
+                    <p class="text-secondary text-left">- {{ comment.comment|capfirst }}</p>
                     <p class="text-secondary text-center">{{ comment.owner|title }}</p>
                 </article>
             </li>
