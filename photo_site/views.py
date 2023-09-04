@@ -79,12 +79,12 @@ def process_image(image):
     """Process and return processed image with a max size of 450x450"""
     try:
         # Process the uploaded image with Pillow
-        image = Image.open(image)
+        img_process = Image.open(image)
         # Resize the image to max-size of 450 x 450 while retaining aspect ratio
         max_size = (450, 450)
-        image.thumbnail(max_size)
+        img_process.thumbnail(max_size)
 
-        return image
+        return img_process
     except (UnidentifiedImageError, IOError, MemoryError):
         # Handle image processing errors gracefully
         return None
@@ -94,13 +94,12 @@ def process_image(image):
 @login_required
 def add_photo(request):
     """a page for adding a new photo and a modal to add a new lens option"""
-    photo_form = PhotoForm()
-    lens_form = LensForm()
 
     if request.method == "POST":
         # Handle the add photo form
         if "add_photo_submit" in request.POST:
             photo_form = PhotoForm(request.POST, request.FILES)
+
             if photo_form.is_valid():
                 new_photo = photo_form.save(commit=False)
                 new_photo.owner = request.user
@@ -108,18 +107,18 @@ def add_photo(request):
                 processed_image = process_image(new_photo.image)
                 if processed_image:
                     new_photo.image = processed_image
-                    new_photo.save()
-                    # create a success msg to notify user
-                    messages.success(request, "Your photo was saved successfully!")
-                    # redirect user to photos page
-                    return redirect("photo_site:photos")
+
                 else:
                     messages.error(
                         request,
-                        "There was an issue with processing the image. Please try again.",
+                        "There was an issue processing the image. Please try again.",
                     )
                     return redirect("photo_site:photos")
-
+                new_photo.save()
+                # create a success msg to notify user
+                messages.success(request, "Your photo was saved successfully!")
+                # redirect user to photos page
+                return redirect("photo_site:photos")
             else:
                 messages.error(
                     request,
@@ -135,6 +134,9 @@ def add_photo(request):
                     return redirect("photo_site:add_photo")
                 except IntegrityError:
                     lens_form.add_error("name", "This name already exists.")
+    else:
+        photo_form = PhotoForm()
+        lens_form = LensForm()
 
     context = {"photo_form": photo_form, "lens_form": lens_form}
     return render(request, "photo_site/add_photo.html", context)
