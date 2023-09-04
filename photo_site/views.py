@@ -14,6 +14,8 @@ from users.forms import NewUserForm
 
 # Imports for Manipulating and Normalizing Images
 from PIL import Image, UnidentifiedImageError
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 # from django.core.files.storage import default_storage
 # from django.core.files.base import ContentFile
@@ -83,6 +85,8 @@ def process_image(image):
         # Resize the image to max-size of 450 x 450 while retaining aspect ratio
         max_size = (450, 450)
         img_process.thumbnail(max_size)
+        temp_path = default_storage.save("temp_image.jpg", ContentFile(""))
+        img_process.save(temp_path, "JPEG")
 
         return img_process
     except (UnidentifiedImageError, IOError, MemoryError):
@@ -104,21 +108,17 @@ def add_photo(request):
                 new_photo = photo_form.save(commit=False)
                 new_photo.owner = request.user
                 # Process uploaded image and replace it with processed one
-                processed_image = process_image(new_photo.image)
-                if processed_image:
-                    new_photo.image = processed_image
-
-                else:
-                    messages.error(
-                        request,
-                        "There was an issue processing the image. Please try again.",
-                    )
+                processed_img = process_image(new_photo.image)
+                if processed_img:
+                    new_photo.image = processed_img
+                    new_photo.save()
+                    # create a success msg to notify user
+                    messages.success(request, "Your photo was saved successfully!")
+                    # redirect user to photos page
                     return redirect("photo_site:photos")
-                new_photo.save()
-                # create a success msg to notify user
-                messages.success(request, "Your photo was saved successfully!")
-                # redirect user to photos page
-                return redirect("photo_site:photos")
+                else:
+                    messages.error(request, "Image Processing Error. Try again.")
+
             else:
                 messages.error(
                     request,
