@@ -11,7 +11,12 @@ from .forms import PhotoForm, CommentForm, LensForm
 from users.models import Profile
 import random
 from users.forms import NewUserForm
-from PIL import Image 
+
+# Imports for Manipulating and Normalizing Images
+from PIL import Image, UnidentifiedImageError
+
+# from django.core.files.storage import default_storage
+# from django.core.files.base import ContentFile
 
 
 # Views for photo_site App
@@ -82,12 +87,44 @@ def add_photo(request):
         if "add_photo_submit" in request.POST:
             photo_form = PhotoForm(request.POST, request.FILES)
             if photo_form.is_valid():
-                new_photo = photo_form.save(commit=False)
-                new_photo.owner = request.user
-                new_photo.save()
-                # create a success msg to notify user
-                messages.success(request, "Your photo was saved successfully!")
-                # redirect user to photos page
+                try:
+                    new_photo = photo_form.save(commit=False)
+                    new_photo.owner = request.user
+                    # Process uploaded image with Pillow
+                    img = Image.open(new_photo.image)
+                    # Resize image to max-size of 450 x 450 while retaining aspect ratio
+                    img_size = (450, 450)
+                    img.thumbnail(img_size)
+                    # save img in JPEG format
+                    img.save(new_photo.image.path, "JPEG")
+                    # save form
+                    new_photo.save()
+                    # create a success msg to notify user
+                    messages.success(request, "Your photo was saved successfully!")
+                    # redirect user to photos page
+                    return redirect("photo_site:photos")
+                except UnidentifiedImageError:
+                    messages.error(
+                        request, "Invalid image format. Please upload a valid image."
+                    )
+                    return redirect("photo_site:photos")
+                except IOError:
+                    messages.error(
+                        request,
+                        "There was an issue processing the image. Please try again.",
+                    )
+                    return redirect("photo_site:photos")
+                except MemoryError:
+                    messages.error(
+                        request,
+                        "There was not enough memory to process the image. Please try with a smaller image.",
+                    )
+                    return redirect("photo_site:photos")
+            else:
+                messages.error(
+                    request,
+                    "There was an error in the form submission. Please check your inputs.",
+                )
                 return redirect("photo_site:photos")
         # Handle the add lens form
         elif "add_lens_submit" in request.POST:
