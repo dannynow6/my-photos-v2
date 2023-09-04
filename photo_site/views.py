@@ -106,15 +106,19 @@ def add_photo(request):
                 new_photo.owner = request.user
                 # Process uploaded image and replace it with processed one
                 processed_image = process_image(new_photo.image)
-                
-                new_photo.image = processed_image
-
-                new_photo.save()
-
-                # create a success msg to notify user
-                messages.success(request, "Your photo was saved successfully!")
-                # redirect user to photos page
-                return redirect("photo_site:photos")
+                if processed_image:
+                    new_photo.image = processed_image
+                    new_photo.save()
+                    # create a success msg to notify user
+                    messages.success(request, "Your photo was saved successfully!")
+                    # redirect user to photos page
+                    return redirect("photo_site:photos")
+                else:
+                    messages.error(
+                        request,
+                        "There was an issue with processing the image. Please try again.",
+                    )
+                    return redirect("photo_site:photos")
 
             else:
                 messages.error(
