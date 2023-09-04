@@ -75,6 +75,21 @@ def index(request):
     return render(request, "photo_site/index.html", context)
 
 
+def process_image(image):
+    """Process and return processed image with a max size of 450x450"""
+    try:
+        # Process the uploaded image with Pillow
+        image = Image.open(image)
+        # Resize the image to max-size of 450 x 450 while retaining aspect ratio
+        max_size = (450, 450)
+        image.thumbnail(max_size)
+
+        return image
+    except (UnidentifiedImageError, IOError, MemoryError):
+        # Handle image processing errors gracefully
+        return None
+
+
 # Require users to have an account before uploading a photo
 @login_required
 def add_photo(request):
@@ -87,39 +102,20 @@ def add_photo(request):
         if "add_photo_submit" in request.POST:
             photo_form = PhotoForm(request.POST, request.FILES)
             if photo_form.is_valid():
-                try:
-                    new_photo = photo_form.save(commit=False)
-                    new_photo.owner = request.user
-                    # Process uploaded image with Pillow
-                    img = Image.open(new_photo.image)
-                    # Resize image to max-size of 450 x 450 while retaining aspect ratio
-                    img_size = (450, 450)
-                    img.thumbnail(img_size)
-                    # save img in JPEG format
-                    img.save(new_photo.image.path, "JPEG")
-                    # save form
-                    new_photo.save()
-                    # create a success msg to notify user
-                    messages.success(request, "Your photo was saved successfully!")
-                    # redirect user to photos page
-                    return redirect("photo_site:photos")
-                except UnidentifiedImageError:
-                    messages.error(
-                        request, "Invalid image format. Please upload a valid image."
-                    )
-                    return redirect("photo_site:photos")
-                except IOError:
-                    messages.error(
-                        request,
-                        "There was an issue processing the image. Please try again.",
-                    )
-                    return redirect("photo_site:photos")
-                except MemoryError:
-                    messages.error(
-                        request,
-                        "There was not enough memory to process the image. Please try with a smaller image.",
-                    )
-                    return redirect("photo_site:photos")
+                new_photo = photo_form.save(commit=False)
+                new_photo.owner = request.user
+                # Process uploaded image and replace it with processed one
+                processed_image = process_image(new_photo.image)
+                
+                new_photo.image = processed_image
+
+                new_photo.save()
+
+                # create a success msg to notify user
+                messages.success(request, "Your photo was saved successfully!")
+                # redirect user to photos page
+                return redirect("photo_site:photos")
+
             else:
                 messages.error(
                     request,
