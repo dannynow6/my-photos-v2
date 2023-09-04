@@ -11,6 +11,7 @@ from .forms import PhotoForm, CommentForm, LensForm
 from users.models import Profile
 import random
 from users.forms import NewUserForm
+from PIL import Image 
 
 
 # Views for photo_site App
