@@ -13,9 +13,9 @@ import random
 from users.forms import NewUserForm
 
 # Imports for Manipulating and Normalizing Images
-from PIL import Image, UnidentifiedImageError
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
+from PIL import Image
+from io import BytesIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 # from django.core.files.storage import default_storage
 # from django.core.files.base import ContentFile
@@ -77,23 +77,6 @@ def index(request):
     return render(request, "photo_site/index.html", context)
 
 
-def process_image(image):
-    """Process and return processed image with a max size of 450x450"""
-    try:
-        # Process the uploaded image with Pillow
-        img_process = Image.open(image)
-        # Resize the image to max-size of 450 x 450 while retaining aspect ratio
-        max_size = (450, 450)
-        img_process.thumbnail(max_size)
-        temp_path = default_storage.save("temp_image.jpg", ContentFile(""))
-        img_process.save(temp_path, "JPEG")
-
-        return img_process
-    except (UnidentifiedImageError, IOError, MemoryError):
-        # Handle image processing errors gracefully
-        return None
-
-
 # Require users to have an account before uploading a photo
 @login_required
 def add_photo(request):
@@ -107,17 +90,32 @@ def add_photo(request):
             if photo_form.is_valid():
                 new_photo = photo_form.save(commit=False)
                 new_photo.owner = request.user
-                # Process uploaded image and replace it with processed one
-                processed_img = process_image(new_photo.image)
-                if processed_img:
-                    new_photo.image = processed_img
-                    new_photo.save()
-                    # create a success msg to notify user
-                    messages.success(request, "Your photo was saved successfully!")
-                    # redirect user to photos page
-                    return redirect("photo_site:photos")
-                else:
-                    messages.error(request, "Image Processing Error. Try again.")
+                # Get the uploaded image from the form
+                uploaded_img = new_photo.image
+                # Open the uploaded image using Pillow
+                image = Image.open(uploaded_img)
+                # Resize the image to max height/width of 450px
+                max_size = (450, 450)
+                image.thumbnail(max_size)
+                # Create a BytesIO buffer to temporarily store image
+                image_buffer = BytesIO()
+                image.save(image_buffer, format="JPEG")
+                # Create an InMemoryUploadedFile from the buffer
+                image_file = InMemoryUploadedFile(
+                    image_buffer,
+                    None,
+                    f"{uploaded_img.name}",
+                    "image/jpeg",
+                    image_buffer.tell(),
+                    None,
+                )
+                # Replace the original uploaded image with the processed image
+                new_photo.image = image_file
+                new_photo.save()
+                # create a success msg to notify user
+                messages.success(request, "Your photo was saved successfully!")
+                # redirect user to photos page
+                return redirect("photo_site:photos")
 
             else:
                 messages.error(
