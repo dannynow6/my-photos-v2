@@ -104,7 +104,7 @@ def add_photo(request):
                 image_file = InMemoryUploadedFile(
                     image_buffer,
                     None,
-                    f"{uploaded_img.name}",
+                    f"{uploaded_img.name}.jpg",
                     "image/jpeg",
                     image_buffer.tell(),
                     None,
