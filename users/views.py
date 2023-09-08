@@ -45,6 +45,9 @@ def process_image(profile_img):
     max_size = (125, 125)
     image.thumbnail(max_size)
     # Remove the file extension from the image name
+    # os.path.splitext splits a filename into two parts: base name and extension
+    # it returns a tuple (filename, extension)
+    # We unpack this tuple into 2 variables (image_name = filename; _ = extension)
     image_name, _ = os.path.splitext(profile_img.name)
 
     # Create a BytesIO buffer to temporarily store image
