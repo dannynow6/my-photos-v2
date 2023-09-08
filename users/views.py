@@ -6,10 +6,7 @@ from .models import Profile
 from .forms import NewUserForm, ProfileForm
 
 # Imports for Manipulating and Normalizing Images
-from PIL import Image
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import os
+from .utils import process_image
 
 # Views for Users App
 
@@ -33,37 +30,6 @@ def register(request):
     # display a blank or invalid form
     context = {"form": form}
     return render(request, "registration/register.html", context)
-
-
-def process_image(profile_img):
-    """process profile image"""
-    # Get the uploaded image from the form
-    profile_image = profile_img
-    # Open the uploaded image using Pillow
-    image = Image.open(profile_image)
-    # Resize the image to max height/width of 125px
-    max_size = (125, 125)
-    image.thumbnail(max_size)
-    # Remove the file extension from the image name
-    # os.path.splitext splits a filename into two parts: base name and extension
-    # it returns a tuple (filename, extension)
-    # We unpack this tuple into 2 variables (image_name = filename; _ = extension)
-    image_name, _ = os.path.splitext(profile_img.name)
-
-    # Create a BytesIO buffer to temporarily store image
-    image_buffer = BytesIO()
-    image.save(image_buffer, format="JPEG")
-    # Create an InMemoryUploadedFile from the buffer
-    image_file = InMemoryUploadedFile(
-        image_buffer,
-        None,
-        f"{image_name}.jpg",  # use base name without file extension
-        "image/jpeg",
-        image_buffer.tell(),
-        None,
-    )
-    # Return processed image
-    return image_file
 
 
 def view_profile(request, user_id):
