@@ -9,6 +9,7 @@ from .forms import NewUserForm, ProfileForm
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+import os
 
 # Views for Users App
 
@@ -43,6 +44,9 @@ def process_image(profile_img):
     # Resize the image to max height/width of 125px
     max_size = (125, 125)
     image.thumbnail(max_size)
+    # Remove the file extension from the image name
+    image_name, _ = os.path.splitext(profile_img.name)
+
     # Create a BytesIO buffer to temporarily store image
     image_buffer = BytesIO()
     image.save(image_buffer, format="JPEG")
@@ -50,7 +54,7 @@ def process_image(profile_img):
     image_file = InMemoryUploadedFile(
         image_buffer,
         None,
-        f"{profile_img.name}.jpg",
+        f"{image_name}.jpg",  # use base name without file extension
         "image/jpeg",
         image_buffer.tell(),
         None,
@@ -66,33 +70,19 @@ def view_profile(request, user_id):
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            # new_profile = form.save(commit=False)
-            # profile_photo = new_profile.photo
-            # new_profile.photo = process_image(profile_photo)
-            # Check if 'photo' field has changed data
-            if "photo" in form.changed_data:
-                # Compare file paths or urls of uploaded picture and existing picture
-                uploaded_pic = (
-                    form.cleaned_data["photo"].name
-                    if form.cleaned_data["photo"]
-                    else None
-                )
-                existing_pic = profile.photo.name if profile.photo else None
+            new_profile = form.save(commit=False)
+            profile_photo = new_profile.photo
 
-                if uploaded_pic == existing_pic:
-                    # if the urls match, don't save the file
-                    if existing_pic:
-                        profile.photo.delete(save=False)
-                    form.cleaned_data["photo"] = None
-                    form.save()
-                    return redirect("users:view_profile", user_id=user_id)
+            # Check if uploaded image is same as existing one
+            if profile_photo:
+                if profile_photo.read() != profile.photo.read():
+                    new_profile.photo = process_image(profile_photo)
                 else:
-                    # Get uploaded image
-                    profile_photo = form.photo
-                    # process uploaded image and save processed image
-                    form.photo = process_image(profile_photo)
-                    form.save()
-                    return redirect("users:view_profile", user_id=user_id)
+                    # If images are the same, use the existing one
+                    new_profile.photo = profile.photo
+
+            form.save()
+            return redirect("users:view_profile", user_id=user_id)
     else:
         # display a blank form
         form = ProfileForm(instance=profile)
