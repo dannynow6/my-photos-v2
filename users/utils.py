@@ -15,7 +15,7 @@ def process_image(profile_img):
     image = Image.open(profile_image)
     # Resize the image to max height/width of 125px
     max_size = (125, 125)
-    image.thumbnail(max_size)
+    image.thumbnail(max_size, Image.ANTIALIAS)
     # Remove the file extension from the image name
     # os.path.splitext splits a filename into two parts: base name and extension
     # it returns a tuple (filename, extension)

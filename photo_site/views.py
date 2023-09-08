@@ -13,9 +13,7 @@ import random
 from users.forms import NewUserForm
 
 # Imports for Manipulating and Normalizing Images
-from PIL import Image
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from .utils import process_photo
 
 # from django.core.files.storage import default_storage
 # from django.core.files.base import ContentFile
@@ -92,25 +90,7 @@ def add_photo(request):
                 new_photo.owner = request.user
                 # Get the uploaded image from the form
                 uploaded_img = new_photo.image
-                # Open the uploaded image using Pillow
-                image = Image.open(uploaded_img)
-                # Resize the image to max height/width of 450px
-                max_size = (450, 450)
-                image.thumbnail(max_size)
-                # Create a BytesIO buffer to temporarily store image
-                image_buffer = BytesIO()
-                image.save(image_buffer, format="JPEG")
-                # Create an InMemoryUploadedFile from the buffer
-                image_file = InMemoryUploadedFile(
-                    image_buffer,
-                    None,
-                    f"{uploaded_img.name}.jpg",
-                    "image/jpeg",
-                    image_buffer.tell(),
-                    None,
-                )
-                # Replace the original uploaded image with the processed image
-                new_photo.image = image_file
+                new_photo.image = process_photo(uploaded_img)
                 new_photo.save()
                 # create a success msg to notify user
                 messages.success(request, "Your photo was saved successfully!")
