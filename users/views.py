@@ -66,22 +66,10 @@ def view_profile(request, user_id):
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            new_profile = form.save(commit=False)
-            profile_photo = new_profile.photo
-            new_profile.photo = process_image(profile_photo)
-            form.save()
-            return redirect("users:view_profile", user_id=user_id)
-    else:
-        # display a blank form
-        form = ProfileForm(instance=profile)
-
-    context = {"profile": profile, "form": form}
-    return render(request, "registration/view_profile.html", context)
-
-
-"""   
-
-# Check if 'photo' field has changed data
+            # new_profile = form.save(commit=False)
+            # profile_photo = new_profile.photo
+            # new_profile.photo = process_image(profile_photo)
+            # Check if 'photo' field has changed data
             if "photo" in form.changed_data:
                 # Compare file paths or urls of uploaded picture and existing picture
                 uploaded_pic = (
@@ -96,10 +84,18 @@ def view_profile(request, user_id):
                     if existing_pic:
                         profile.photo.delete(save=False)
                     form.cleaned_data["photo"] = None
+                    form.save()
+                    return redirect("users:view_profile", user_id=user_id)
                 else:
                     # Get uploaded image
                     profile_photo = form.photo
                     # process uploaded image and save processed image
                     form.photo = process_image(profile_photo)
+                    form.save()
+                    return redirect("users:view_profile", user_id=user_id)
+    else:
+        # display a blank form
+        form = ProfileForm(instance=profile)
 
-"""
+    context = {"profile": profile, "form": form}
+    return render(request, "registration/view_profile.html", context)
