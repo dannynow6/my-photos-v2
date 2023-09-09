@@ -16,7 +16,9 @@ def process_photo(uploaded_photo):
     image = Image.open(photo)
     # resize image to 450px max h/w
     max_size = (450, 450)
-    image.thumbnail(max_size, Image.ANTIALIAS)
+    image.thumbnail(
+        max_size
+    )  # , Image.ANTIALIAS-Try without this to fix orientation problem
     # remove file extension from image name
     image_name, _ = os.path.splitext(uploaded_photo.name)
     # create a BytesIO buffer to temporarily store image
