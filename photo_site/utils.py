@@ -1,5 +1,5 @@
 # imports for utility functions for image processing
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -14,6 +14,9 @@ def process_photo(uploaded_photo):
     photo = uploaded_photo
     # open image in Pillow to process
     image = Image.open(photo)
+    # Apply EXIF orientation if needed
+    image = ImageOps.exif_transpose(image)
+
     # resize image to 450px max h/w
     max_size = (450, 450)
     image.thumbnail(
