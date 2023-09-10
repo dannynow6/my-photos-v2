@@ -1,5 +1,5 @@
 # imports for functions in utils
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
@@ -13,6 +13,8 @@ def process_image(profile_img):
     profile_image = profile_img
     # Open the uploaded image using Pillow
     image = Image.open(profile_image)
+    # Apply EXIF orientation if needed
+    image = ImageOps.exif_transpose(image)
     # Resize the image to max height/width of 125px
     max_size = (125, 125)
     image.thumbnail(max_size, Image.ANTIALIAS)
