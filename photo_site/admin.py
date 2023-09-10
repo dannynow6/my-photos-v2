@@ -4,8 +4,8 @@ from .utils import process_photo
 
 
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ("id", "owner", "title")
-    list_filter = ("owner",)
+    list_display = ("id", "owner", "title", "photo_type")
+    list_filter = ("owner", "photo_type", "year_taken")
     search_fields = ("id", "title")
 
     def save_model(self, request, obj, form, change):
@@ -24,7 +24,19 @@ class PhotoAdmin(admin.ModelAdmin):
             print("Error in save_model:", e)
 
 
+class LensAdmin(admin.ModelAdmin):
+    list_display = ("name", "make", "size")
+    list_filter = ("make",)
+    search_fields = ("size",)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("owner", "date_added", "photo")
+    list_filter = ("owner",)
+    search_fields = ("comment",)
+
+
 # Register your models here.
 admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Comment)
-admin.site.register(Lens)
+admin.site.register(Comment, CommentAdmin)
+admin.site.register(Lens, LensAdmin)
