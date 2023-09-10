@@ -5,6 +5,8 @@ from .utils import process_photo
 
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ("id", "owner", "title")
+    list_filter = ("owner",)
+    search_fields = ("id", "title")
 
     def save_model(self, request, obj, form, change):
         try:
