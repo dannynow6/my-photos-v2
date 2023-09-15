@@ -242,25 +242,6 @@ def my_photos(request):
     return render(request, "photo_site/my_photos.html", context)
 
 
-"""
-@login_required
-def edit_photo(request, photo_id):
-    # User can edit their own photo
-    photo = Photo.objects.get(id=photo_id)
-
-    if request.method != "POST":
-        form = PhotoForm(instance=photo)
-    else:
-        form = PhotoForm(request.POST, request.FILES, instance=photo)
-        if form.is_valid():
-            form.save()
-            # create a success msg to notify user
-            messages.success(request, "Your photo was successfully edited!")
-            return redirect("photo_site:my_photos")
-    context = {"form": form, "photo": photo}
-    return render(request, "photo_site/edit_photo.html", context)
-"""
-
 # Since pulling photo from database for featured on About and Home pages
 # Should handle potential error if no PK matches random number
 # The problem could arise if a photo deleted or something
