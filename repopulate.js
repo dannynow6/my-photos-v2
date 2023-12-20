@@ -2,7 +2,13 @@
 function saveFormData () {
   const formData = {}
   document
-    .querySelectorAll('#yourForm input, #yourForm select')
+    .querySelectorAll(
+      '#id_title',
+      '#id_description',
+      '#id_location',
+      '#id_camera',
+      '#id_keywords'
+    )
     .forEach(input => {
       formData[input.name] = input.value
     })
