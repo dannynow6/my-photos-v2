@@ -79,7 +79,9 @@ def index(request):
 @login_required
 def add_photo(request):
     """a page for adding a new photo and a modal to add a new lens option"""
-   
+    photo_form = PhotoForm()
+    lens_form = LensForm() 
+    
     if request.method == "POST":
         # Handle the add photo form
         if "add_photo_submit" in request.POST:
@@ -112,9 +114,6 @@ def add_photo(request):
                     return redirect("photo_site:add_photo")
                 except IntegrityError:
                     lens_form.add_error("name", "This name already exists.")
-    else:
-       photo_form = PhotoForm()
-       lens_form = LensForm() 
         
     context = {"photo_form": photo_form, "lens_form": lens_form}
     return render(request, "photo_site/add_photo.html", context)
