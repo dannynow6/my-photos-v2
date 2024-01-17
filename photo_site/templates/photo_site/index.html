@@ -7,10 +7,10 @@
     <br />
     {% if user.is_authenticated %}
     <div class="d-flex justify-content-between">
-        <a class="index-nav" href="{% url 'photo_site:photos' %}">Photos</a> 
-        <a class="index-nav" href="{% url 'photo_site:about' %}">About</a>
-        <a class="index-nav" href="{% url 'photo_site:add_photo' %}">Add Photo</a>
-        <a class="index-nav" href="{% url 'photo_site:my_photos' %}">{{ user.username|title }}'s Photos</a>
+        <a class="index-nav" href="{% url 'photo_site:photos' %}">{% bs_icon 'images' %} Photos</a> 
+        <a class="index-nav" href="{% url 'photo_site:about' %}">{% bs_icon 'info-circle' %} About</a>
+        <a class="index-nav" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'plus-circle' %} Add Photo</a>
+        <a class="index-nav" href="{% url 'photo_site:my_photos' %}">{% bs_icon 'images' %} {{ user.username|title }}'s Photos</a>
     </div>
     {% else %}
     <div class="d-flex justify-content-around">
