@@ -1,3 +1,17 @@
+
+   // Attach event listener to the form's submit event
+   const form = document.getElementById('PhotoForm')
+   if (form) {
+     form.addEventListener('submit', function (event) {
+       // You might want to check here if the form submission is valid
+       // before clearing the local storage
+       clearLocalStorage()
+     })
+
+
+
+
+
 // Example function to save form data to local storage
 function saveFormData () {
   const formData = {}

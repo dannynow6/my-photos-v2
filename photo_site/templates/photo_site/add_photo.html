@@ -23,7 +23,7 @@
       </div>
       {% endif %}
         <div class="container p-4 my-2">
-          <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:add_photo' %}">
+          <form enctype="multipart/form-data" method="POST" action="{% url 'photo_site:add_photo' %}" id="PhotoForm">
           {% csrf_token %} 
           
           {# Rendering form fields/labels manually to control where modal button displayed #}
