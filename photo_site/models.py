@@ -22,7 +22,7 @@ class Photo(models.Model):
 
     # Choice list for Photo Type
     # Type choices can be used to filter photos displayed in gallery templates
-    TYPE_CHOICES = [
+    UNSORTED_TYPE_CHOICES = [
         ("landscape", "Landscape"),
         ("street", "Street"),
         ("macro", "Macro"),
@@ -46,6 +46,9 @@ class Photo(models.Model):
         ("photojournalism", "Photojournalism"),
     ]
 
+    # Sort the choices by the human-readable name
+    TYPE_CHOICES = sorted(UNSORTED_TYPE_CHOICES, key=lambda choice: choice[1])
+    
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=250, unique=True)
     description = models.CharField(max_length=300)
