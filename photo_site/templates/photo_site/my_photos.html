@@ -5,7 +5,7 @@
 {% block content %} 
 <div class="container w-75">
     {% if selected_type %}
-        <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s {{ selected_type|title }} Photos</h4>
+        <h4 class="display-4 text-center my-2" id="your-photos"><img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" /> {{ user.username|title }}'s {{ selected_type|title }}</h4>
     {% else %}
         <h4 class="display-4 text-center my-2" id="your-photos">{% if current_profile.photo %}<img src="{{ current_profile.photo.url }}" alt="{{ user.username }}" style="max-height:100px;max-width:125px;border-radius:50%;" />{% endif %}  {{ user.username|title }}'s Photos</h4>
     {% endif %}
@@ -23,9 +23,9 @@
     </span>
     <div class="collapse" id="filterOptions">
         <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
-            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
+            <a class="btn btn-outline-secondary rounded-pill" href="?">All</a>
             {% for photo_type in photo_types %}
-            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
+            <a class="btn btn-outline-secondary rounded-pill" href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}>{{ photo_type.1 }}</a>
             {% endfor %}
         </div>
     </div>
@@ -45,7 +45,7 @@
             <h6 class="text-secondary text-center">No Photos</h6>
             <br />
             <span class="d-flex justify-content-center">
-                <button type="button" class="btn btn-outline-primary rounded-pill"><a class="nav-link" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a></button>
+                <a class="btn btn-outline-primary rounded-pill" href="{% url 'photo_site:add_photo' %}">{% bs_icon 'image-fill' %} Add Photo</a>
             </span>
     {% endfor %}
         </div>
