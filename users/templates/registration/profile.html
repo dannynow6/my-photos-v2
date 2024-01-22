@@ -31,7 +31,7 @@
 
 {% endblock content %}
 
-<button type="button" class="btn btn-outline-danger mx-2 mb-2"><a class="text-danger" href="{% url 'users:profile' user.id %}">{% bs_icon 'pencil' size="1.1em" %} Edit</a></button>
+<a class="btn btn-outline-danger mx-2 mb-2" href="{% url 'users:profile' user.id %}">{% bs_icon 'pencil' %} Edit</a>
 
 
 <article class="d-flex justify-content-center">
@@ -99,7 +99,7 @@
     
   <br/>
   <span class="d-flex justify-content-center">
-      <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} <span class="text-secondary">Edit</span></button>
+      <button class="btn btn-outline-danger rounded-pill" data-toggle="modal" data-target="#profileModal">{% bs_icon "pencil" %} Edit</button>
   </span>
 </article>
 
