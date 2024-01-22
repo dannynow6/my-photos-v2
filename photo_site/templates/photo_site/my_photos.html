@@ -20,15 +20,15 @@
 
     <span class="d-flex justify-content-center mb-3">
         <a class="btn btn-outline-secondary rounded-pill" data-toggle="collapse" href="#filterOptions" role="button" aria-expanded="false" aria-controls="filterOptions">Filter Photos</a>
-        </span>
-        <div class="collapse" id="filterOptions">
-            <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
-                <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
-                {% for photo_type in photo_types %}
-                <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
-                {% endfor %}
-            </div>
+    </span>
+    <div class="collapse" id="filterOptions">
+        <div class="btn-group d-flex flex-wrap" role="group" aria-label="filter photos">
+            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?"><span class="text-secondary">All</span></a></button>
+            {% for photo_type in photo_types %}
+            <button type="button" class="btn btn-outline-secondary rounded-pill"><a href="?photo_type={{ photo_type.0 }}" {% if photo_type.0 == selected_type %}class="active"{% endif %}><span class="text-secondary">{{ photo_type.1 }}</span></a></button>
+            {% endfor %}
         </div>
+    </div>
 
     <div class="container d-flex justify-content-between flex-wrap">
     {% for photo in my_photos %}
